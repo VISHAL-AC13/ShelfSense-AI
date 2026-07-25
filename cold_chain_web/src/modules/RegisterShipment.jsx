@@ -10,7 +10,7 @@ export default function RegisterShipment({ onRegisterShipment, setActiveTab }) {
     product: "Oddanchatram Keerai & Hill Carrots",
     storage_type: "Leafy Vegetables & Salads",
     vehicle_number: "TN-57-F-" + Math.floor(1000 + Math.random() * 9000),
-    driver_name: "Vishal",
+    driver_name: "Driver S. Kumar",
     origin_name: "Oddanchatram Vegetable Hub, TN",
     dest_name: "Koyambedu Market, Chennai, TN",
     origin_lat: 10.5015,
@@ -210,7 +210,7 @@ export default function RegisterShipment({ onRegisterShipment, setActiveTab }) {
               name="driver_name" 
               value={formData.driver_name} 
               onChange={handleChange} 
-              placeholder="e.g. Vishal" 
+              placeholder="e.g. Driver S. Kumar" 
               required 
             />
           </div>

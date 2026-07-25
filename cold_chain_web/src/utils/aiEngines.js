@@ -92,7 +92,7 @@ export function evaluateSpoilageRisk(shipment) {
   }
 
   if (reasons.length === 0) {
-    reasons.push(`Optimal Food Safety Envelope: All 9 thermal sensors, humidity (${hum.toFixed(1)}%), and door access events strictly comply with the ${shipment.storage_type} protocol.`);
+    reasons.push("All thermal sensors, humidity levels, and door security are nominal.");
   }
 
   riskScore = Math.min(10.0, Math.max(0.5, parseFloat(riskScore.toFixed(1))));
@@ -156,8 +156,8 @@ export function generateRecommendations(shipment, transRisk, spoilRisk, healthSc
   } else {
     recs.push({
       priority: "NOMINAL",
-      action: `Maintain Standard Transit Velocity & Automated Telemetry Logging`,
-      reason: `Consignment health is optimal at ${healthScore}%. Continue real-time GPS tracking and 9-zone thermal monitoring.`
+      action: "Maintain Highway Cruising & Telemetry Logging",
+      reason: "All food preservation parameters are nominal. Continue standard monitoring."
     });
   }
 

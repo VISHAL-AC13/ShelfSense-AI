@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { ShieldCheck, Lock, Mail, User, ArrowRight, Sparkles, Zap, CheckCircle2, Building2, Award } from "lucide-react";
 
 export default function LoginPage({ onLogin }) {
-  const [email, setEmail] = useState("vishal@shelfsense.ai");
+  const [email, setEmail] = useState("admin@shelfsense.ai");
   const [password, setPassword] = useState("••••••••••••");
   const [selectedRole, setSelectedRole] = useState("admin");
   const [loading, setLoading] = useState(false);
@@ -11,9 +11,9 @@ export default function LoginPage({ onLogin }) {
   const demoAccounts = [
     {
       id: "admin",
-      name: "Vishal",
+      name: "System Admin",
       role: "Chief Quality Officer & Fleet Admin",
-      email: "vishal@shelfsense.ai",
+      email: "admin@shelfsense.ai",
       hub: "Oddanchatram / Koyambedu Hubs, TN",
       badge: "Full Access",
       badgeColor: "#2563EB",
@@ -22,9 +22,9 @@ export default function LoginPage({ onLogin }) {
     },
     {
       id: "logistics",
-      name: "Vishal (Logistics Ops)",
+      name: "Logistics Manager",
       role: "Tamil Nadu Highway Logistics Lead",
-      email: "ops.tn@shelfsense.ai",
+      email: "logistics@shelfsense.ai",
       hub: "NH-44 & NH-48 Transit Corridors",
       badge: "Fleet Ops",
       badgeColor: "#059669",
@@ -33,9 +33,9 @@ export default function LoginPage({ onLogin }) {
     },
     {
       id: "auditor",
-      name: "Dr. Vishal (FSSAI Auditor)",
+      name: "Regulatory Auditor",
       role: "Government Cold-Chain Inspector",
-      email: "auditor@fssai.gov.in",
+      email: "auditor@shelfsense.ai",
       hub: "FSSAI Regional Office, Chennai",
       badge: "Regulatory",
       badgeColor: "#D97706",

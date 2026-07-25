@@ -79,11 +79,11 @@ export default function Sidebar({ activeTab, setActiveTab, shipmentsCount, alert
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "10px", background: "#F8FAFC", borderRadius: "10px", border: "1px solid #E2E8F0", marginBottom: "12px" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "10px", overflow: "hidden" }}>
             <div style={{ minWidth: "32px", width: "32px", height: "32px", borderRadius: "50%", background: "#2563EB", color: "white", display: "flex", alignItems: "center", justify: "center", fontWeight: 700, fontSize: "0.9rem" }}>
-              {currentUser?.name ? currentUser.name[0] : "V"}
+              {currentUser?.name ? currentUser.name[0] : "S"}
             </div>
             <div style={{ overflow: "hidden" }}>
               <div style={{ fontWeight: 700, color: "#0F172A", fontSize: "0.85rem", whiteSpace: "nowrap", textOverflow: "ellipsis", overflow: "hidden" }}>
-                {currentUser?.name || "Vishal"}
+                {currentUser?.name || "System Admin"}
               </div>
               <div style={{ fontSize: "0.7rem", color: "#64748B", whiteSpace: "nowrap", textOverflow: "ellipsis", overflow: "hidden" }}>
                 {currentUser?.role || "Quality Admin"}
