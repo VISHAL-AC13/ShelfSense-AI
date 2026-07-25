@@ -1,8 +1,8 @@
 // src/components/Navbar.jsx
 import React from "react";
-import { Sparkles, Shield, Clock, Zap, RefreshCw } from "lucide-react";
+import { Sparkles, Shield, Clock, Zap, RefreshCw, Menu } from "lucide-react";
 
-export default function Navbar({ activeTab, activeInterventions, onResetDemo }) {
+export default function Navbar({ activeTab, activeInterventions, onResetDemo, onToggleMobile }) {
   const getTitle = () => {
     switch (activeTab) {
       case "dashboard": return "Tamil Nadu Agri-Food Fleet Dashboard & Timely Intervention Center";
@@ -16,13 +16,24 @@ export default function Navbar({ activeTab, activeInterventions, onResetDemo }) 
   };
 
   return (
-    <header className="navbar" style={{ background: "#FFFFFF", borderBottom: "1px solid #E2E8F0", padding: "0 32px", height: "70px" }}>
-      <div className="navbar-title" style={{ fontWeight: 600, color: "#0F172A", fontSize: "1.05rem" }}>
-        <Zap size={18} color="#2563EB" />
-        <span>{getTitle()}</span>
+    <header className="navbar" style={{ background: "#FFFFFF", borderBottom: "1px solid #E2E8F0", padding: "0 32px", minHeight: "70px", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "12px" }}>
+      <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+        {onToggleMobile && (
+          <button 
+            className="mobile-menu-btn" 
+            onClick={onToggleMobile}
+            style={{ background: "#F1F5F9", border: "1px solid #CBD5E1", borderRadius: "8px", padding: "8px", cursor: "pointer", color: "#334155", display: "none" }}
+          >
+            <Menu size={20} />
+          </button>
+        )}
+        <div className="navbar-title" style={{ fontWeight: 600, color: "#0F172A", fontSize: "1.05rem", display: "flex", alignItems: "center", gap: "8px" }}>
+          <Zap size={18} color="#2563EB" />
+          <span className="navbar-title-text">{getTitle()}</span>
+        </div>
       </div>
 
-      <div style={{ display: "flex", alignItems: "center", gap: "14px", fontSize: "0.85rem", color: "#475569", fontWeight: 500 }}>
+      <div className="navbar-right-controls" style={{ display: "flex", alignItems: "center", gap: "10px", fontSize: "0.85rem", color: "#475569", fontWeight: 500, flexWrap: "wrap" }}>
         {onResetDemo && (
           <button 
             onClick={onResetDemo}

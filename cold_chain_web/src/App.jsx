@@ -20,6 +20,7 @@ import "./App.css";
 
 export default function App() {
   const [activeTab, setActiveTab] = useState("dashboard");
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [shipments, setShipments] = useState(() => {
     try {
       const saved = localStorage.getItem("aether_tn_shipments_v3");
@@ -271,12 +272,21 @@ export default function App() {
         </div>
       )}
 
+      {mobileMenuOpen && (
+        <div 
+          className="mobile-backdrop" 
+          onClick={() => setMobileMenuOpen(false)} 
+        />
+      )}
+
       <Sidebar 
         activeTab={activeTab} 
-        setActiveTab={setActiveTab} 
+        setActiveTab={(id) => { setActiveTab(id); setMobileMenuOpen(false); }} 
         shipmentsCount={shipments.length} 
         alertsCount={totalAlerts}
         activeInterventions={activeInterventions}
+        mobileMenuOpen={mobileMenuOpen}
+        onCloseMobile={() => setMobileMenuOpen(false)}
       />
 
       <main className="main-container">
@@ -284,6 +294,7 @@ export default function App() {
           activeTab={activeTab} 
           activeInterventions={activeInterventions} 
           onResetDemo={handleResetDemo}
+          onToggleMobile={() => setMobileMenuOpen(!mobileMenuOpen)}
         />
 
         <div className="content-area">

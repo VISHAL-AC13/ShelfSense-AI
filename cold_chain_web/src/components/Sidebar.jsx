@@ -9,10 +9,11 @@ import {
   FileText, 
   ShieldCheck,
   Apple,
-  Zap
+  Zap,
+  X
 } from "lucide-react";
 
-export default function Sidebar({ activeTab, setActiveTab, shipmentsCount, alertsCount, activeInterventions }) {
+export default function Sidebar({ activeTab, setActiveTab, shipmentsCount, alertsCount, activeInterventions, mobileMenuOpen, onCloseMobile }) {
   const navItems = [
     { id: "dashboard", label: "Fleet Dashboard", icon: LayoutDashboard },
     { id: "register", label: "Register Shipment", icon: PlusCircle },
@@ -23,15 +24,26 @@ export default function Sidebar({ activeTab, setActiveTab, shipmentsCount, alert
   ];
 
   return (
-    <aside className="sidebar">
-      <div className="sidebar-header">
-        <div className="logo-icon" style={{ background: "#2563EB" }}>
-          <Zap size={22} color="white" />
+    <aside className={`sidebar ${mobileMenuOpen ? "mobile-open" : ""}`}>
+      <div className="sidebar-header" style={{ justifyContent: "space-between" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+          <div className="logo-icon" style={{ background: "#2563EB" }}>
+            <Zap size={22} color="white" />
+          </div>
+          <div>
+            <div className="sidebar-brand-title">ShelfSense AI</div>
+            <div className="sidebar-brand-sub" style={{ color: "#2563EB", fontWeight: 600 }}>Tamil Nadu Cold Chain</div>
+          </div>
         </div>
-        <div>
-          <div className="sidebar-brand-title">ShelfSense AI</div>
-          <div className="sidebar-brand-sub" style={{ color: "#2563EB", fontWeight: 600 }}>Tamil Nadu Cold Chain</div>
-        </div>
+        {onCloseMobile && (
+          <button 
+            className="mobile-close-btn" 
+            onClick={onCloseMobile}
+            style={{ background: "transparent", border: "none", cursor: "pointer", color: "#64748B", display: "none" }}
+          >
+            <X size={22} />
+          </button>
+        )}
       </div>
 
       <nav className="sidebar-nav">

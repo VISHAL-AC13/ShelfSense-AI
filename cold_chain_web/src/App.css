@@ -260,3 +260,149 @@
   background: transparent !important;
   border: none !important;
 }
+
+/* =========================================================
+   COMPREHENSIVE MOBILE RESPONSIVENESS (PHONES & TABLETS)
+   ========================================================= */
+@media (max-width: 900px) {
+  .app-layout {
+    flex-direction: column;
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  /* Fixed Sidebar transitions to off-screen drawer on mobile */
+  .sidebar {
+    transform: translateX(-100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1000;
+    width: 280px !important;
+    max-width: 85vw;
+    box-shadow: none;
+  }
+
+  .sidebar.mobile-open {
+    transform: translateX(0);
+    box-shadow: 10px 0 30px rgba(0, 0, 0, 0.25);
+  }
+
+  .mobile-close-btn {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+    border-radius: 8px;
+  }
+  .mobile-close-btn:hover {
+    background: #E2E8F0;
+  }
+
+  .mobile-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(15, 23, 42, 0.5);
+    backdrop-filter: blur(2px);
+    z-index: 999;
+    animation: fadeIn 0.2s ease;
+  }
+
+  /* Main Container spans 100% width on mobile */
+  .main-container {
+    margin-left: 0 !important;
+    width: 100% !important;
+    max-width: 100vw !important;
+  }
+
+  /* Navbar styling for mobile */
+  .navbar {
+    padding: 10px 16px !important;
+    height: auto !important;
+    min-height: 64px !important;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .mobile-menu-btn {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .navbar-title {
+    font-size: 0.95rem !important;
+  }
+  
+  .navbar-title-text {
+    max-width: 220px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .navbar-right-controls {
+    width: 100%;
+    justify-content: flex-start;
+    gap: 8px !important;
+  }
+
+  .navbar-right-controls > button,
+  .navbar-right-controls > div {
+    font-size: 0.75rem !important;
+    padding: 5px 10px !important;
+  }
+
+  /* Content area compact padding on mobile */
+  .content-area {
+    padding: 14px !important;
+  }
+
+  /* Tabs horizontal scrolling on mobile */
+  .clean-tabs-nav {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
+    padding-bottom: 8px;
+  }
+  .clean-tab-btn {
+    padding: 8px 14px;
+    font-size: 0.85rem;
+  }
+
+  /* Thermal grid stacks on mobile */
+  .sensor-grid-3x3 {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+
+  /* Maps shrink height on phone screens */
+  .map-container-clean {
+    height: 320px !important;
+  }
+
+  /* Card paddings shrink on mobile */
+  .clean-card {
+    padding: 16px !important;
+  }
+
+  /* Ensure selectors and headers wrap on phone screens */
+  select, input, textarea {
+    max-width: 100% !important;
+  }
+  div[style*="justifyContent: space-between"],
+  div[style*="justify-content: space-between"] {
+    flex-wrap: wrap !important;
+    gap: 12px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar-title-text {
+    max-width: 170px;
+  }
+  .content-area {
+    padding: 10px !important;
+  }
+}
