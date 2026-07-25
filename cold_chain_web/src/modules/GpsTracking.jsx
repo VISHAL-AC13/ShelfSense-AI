@@ -99,10 +99,10 @@ export default function GpsTracking({ shipments, onExecuteIntervention }) {
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "24px" }}>
         <div>
           <h2 style={{ fontSize: "1.45rem", color: "#0F172A", display: "flex", alignItems: "center", gap: "10px", fontWeight: 600 }}>
-            <Navigation color="#2563EB" /> Real-Time GPS Tamil Nadu Route & Shelf-Life Telemetry
+            <Navigation color="#2563EB" /> Live GPS Route Tracking
           </h2>
           <p style={{ color: "#64748B", fontSize: "0.88rem", marginTop: "4px" }}>
-            Live vector mapping plotting Tamil Nadu agri-hubs, dynamic route diversions, highway traffic flow, and remaining biological shelf-life.
+            Live route tracking, traffic flow, and shelf-life telemetry.
           </p>
         </div>
         <div>
@@ -136,14 +136,14 @@ export default function GpsTracking({ shipments, onExecuteIntervention }) {
           <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
             <AlertTriangle size={24} color="#D97706" />
             <div>
-              <strong style={{ color: "#92400E", fontSize: "0.95rem" }}>🚨 ROUTE DIVERSION ACTIVE — Target Changed to Nearest TN Depot</strong>
+              <strong style={{ color: "#92400E", fontSize: "0.95rem" }}>🚨 ROUTE DIVERSION ACTIVE</strong>
               <p style={{ color: "#B45309", fontSize: "0.85rem", margin: "2px 0 0 0" }}>
-                To salvage perishable produce shelf-life, this vehicle was diverted from original target to <strong>{shipment.dest_name}</strong> ({remDist} km remaining).
+                Vehicle diverted to <strong>{shipment.dest_name}</strong> ({remDist} km remaining).
               </p>
             </div>
           </div>
           <span style={{ background: "#FEF3C7", color: "#92400E", padding: "6px 12px", borderRadius: "6px", fontSize: "0.8rem", fontWeight: 600, border: "1px solid #FDE68A" }}>
-            DYNAMIC GPS RE-CALCULATED
+            RECALCULATED
           </span>
         </div>
       )}
@@ -155,7 +155,7 @@ export default function GpsTracking({ shipments, onExecuteIntervention }) {
             <Compass size={16} color="#2563EB" /> Total Route Distance
           </div>
           <div className="kpi-value" style={{ color: "#0F172A", fontSize: "1.4rem" }}>{totalDist} km</div>
-          <div className="kpi-subtitle">Tamil Nadu Highway Corridor</div>
+          <div className="kpi-subtitle">Highway Corridor</div>
         </div>
 
         <div className="kpi-card" style={{ borderLeft: isRerouted ? "4px solid #D97706" : "4px solid #059669" }}>
@@ -194,7 +194,7 @@ export default function GpsTracking({ shipments, onExecuteIntervention }) {
       {/* Leaflet Map Container */}
       <div className="clean-card" style={{ padding: "16px" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px", padding: "0 8px" }}>
-          <span style={{ fontWeight: 600, color: "#0F172A", fontSize: "0.95rem" }}>🛰️ Live GPS Vector Map — Tamil Nadu Perishable Transit Trajectory</span>
+          <span style={{ fontWeight: 600, color: "#0F172A", fontSize: "0.95rem" }}>🛰️ Live GPS Transit Map</span>
           <span style={{ fontSize: "0.85rem", color: "#475569", fontWeight: 500 }}>Vehicle: <strong>{shipment.vehicle_number}</strong> ({shipment.driver_name})</span>
         </div>
 
@@ -213,21 +213,21 @@ export default function GpsTracking({ shipments, onExecuteIntervention }) {
             {/* Origin Marker */}
             <Marker position={[originLat, originLon]} icon={originIcon}>
               <Popup>
-                <strong>🟢 Tamil Nadu Agri-Hub Origin:</strong><br />{shipment.origin_name}<br />Lat: {originLat}, Lon: {originLon}
+                <strong>🟢 Origin:</strong><br />{shipment.origin_name}<br />Lat: {originLat}, Lon: {originLon}
               </Popup>
             </Marker>
 
             {/* Destination Marker */}
             <Marker position={[destLat, destLon]} icon={destIcon}>
               <Popup>
-                <strong>🏁 {isRerouted ? "Diverted Emergency Depot:" : "Food Market Destination:"}</strong><br />{shipment.dest_name}<br />Lat: {destLat}, Lon: {destLon}
+                <strong>🏁 {isRerouted ? "Diverted Depot:" : "Destination:"}</strong><br />{shipment.dest_name}<br />Lat: {destLat}, Lon: {destLon}
               </Popup>
             </Marker>
 
             {/* Truck Current Marker */}
             <Marker position={[currLat, currLon]} icon={truckIcon}>
               <Popup>
-                <strong>🚚 Refrigerated Food Truck (TN Reg)</strong><br />
+                <strong>🚚 Refrigerated Truck</strong><br />
                 <strong>Product:</strong> {shipment.product}<br />
                 <strong>Vehicle:</strong> {shipment.vehicle_number}<br />
                 <strong>Driver:</strong> {shipment.driver_name}<br />

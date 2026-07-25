@@ -50,10 +50,10 @@ export default function AiAnalysis({ shipments, onExecuteIntervention }) {
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "24px" }}>
         <div>
           <h2 style={{ fontSize: "1.5rem", color: "#0F172A", display: "flex", alignItems: "center", gap: "10px" }}>
-            <Zap color="#2563EB" /> Timely Intervention & AI Prescriptive Recommendation Engine
+            <Zap color="#2563EB" /> AI Interventions
           </h2>
           <p style={{ color: "#64748B", fontSize: "0.9rem", marginTop: "4px" }}>
-            Automated decision support heuristics, Spoilage severity scoring, and 1-click timely interventions to salvage produce shelf-life.
+            AI spoilage predictions and automated recovery actions.
           </p>
         </div>
         <div>
@@ -78,31 +78,35 @@ export default function AiAnalysis({ shipments, onExecuteIntervention }) {
           <ShieldAlert size={36} color={scoreColor} />
           <div>
             <div style={{ fontSize: "0.85rem", fontWeight: 700, color: "#64748B", textTransform: "uppercase" }}>
-              Primary AI Prediction // Manifest #{shipment.shipment_id}
+              AI Assessment — #{shipment.shipment_id}
             </div>
             <h3 style={{ fontSize: "1.4rem", color: "#0F172A", margin: "4px 0" }}>
-              Predicted Spoilage Risk Score: <span style={{ color: scoreColor }}>{spoilRisk.risk_score} / 10</span> ({spoilRisk.spoilage_risk} SEVERITY)
+              Spoilage Risk Score: <span style={{ color: scoreColor }}>{spoilRisk.risk_score} / 10</span> ({spoilRisk.spoilage_risk})
             </h3>
             <p style={{ fontSize: "0.92rem", color: "#475569" }}>
-              <strong>AI Assessment:</strong> {spoilRisk.reasons[0] || "All food preservation parameters are strictly within nominal tolerances."}
+              <strong>AI Assessment:</strong> {spoilRisk.reasons[0] || "All parameters nominal."}
             </p>
           </div>
         </div>
         <div style={{ textAlign: "right" }}>
-          <span className={`status-badge ${spoilBadge}`} style={{ fontSize: "1rem", padding: "8px 16px" }}>
-            {spoilRisk.spoilage_risk} SPOILAGE RISK
-          </span>
+          <button 
+            className="btn-clean btn-primary" 
+            style={{ padding: "12px 24px", fontSize: "0.95rem", background: scoreColor }}
+            onClick={() => onExecuteIntervention(shipment.shipment_id, "Priority ML Salvage Routine Initiated", "THERMAL_OVERRIDE")}
+          >
+            ⚡ Execute Salvage Routine
+          </button>
         </div>
       </div>
 
-      {/* 3 AI Intelligence Cards Row */}
+      {/* 3 Analytics Cards */}
       <div className="grid-cols-3">
         {/* Card 1: Transport ML Risk */}
         <div className="clean-card" style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", marginBottom: 0 }}>
           <div>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px" }}>
               <span style={{ fontSize: "0.8rem", fontWeight: 700, color: "#64748B", textTransform: "uppercase" }}>
-                1. Logistics Delay & Hazard ML
+                1. Route & Delay Risk
               </span>
               <Cpu size={18} color="#2563EB" />
             </div>
@@ -115,7 +119,7 @@ export default function AiAnalysis({ shipments, onExecuteIntervention }) {
               </span>
             </div>
             <p style={{ fontSize: "0.82rem", color: "#475569", marginBottom: "16px" }}>
-              Evaluates highway transit delays, door openings, and ambient thermal drift to output ML probabilities:
+              Evaluates transit delays, door openings, and thermal drift:
             </p>
           </div>
           <div>
@@ -167,7 +171,7 @@ export default function AiAnalysis({ shipments, onExecuteIntervention }) {
               </span>
             </div>
             <p style={{ fontSize: "0.82rem", color: "#475569", marginBottom: "16px" }}>
-              Evaluates multi-zone temperature compliance, condensation risk, and microbial growth heuristics.
+              Evaluates temperature compliance, condensation risk, and microbial heuristics.
             </p>
           </div>
           <div style={{ background: "#F8FAFC", padding: "12px 14px", borderRadius: "10px", border: "1px solid #E2E8F0" }}>
@@ -196,7 +200,7 @@ export default function AiAnalysis({ shipments, onExecuteIntervention }) {
             </div>
           </div>
           <div style={{ fontSize: "0.85rem", color: healthScore >= 85 ? "#059669" : healthScore >= 70 ? "#D97706" : "#E11D48", fontWeight: 700 }}>
-            {healthScore >= 85 ? "🟢 Prime Produce Quality & Shelf-Life" : healthScore >= 70 ? "🟡 Moderate Operational Stress" : "🔴 Critical Quality Degradation"}
+            {healthScore >= 85 ? "🟢 Prime Quality" : healthScore >= 70 ? "🟡 Moderate Operational Stress" : "🔴 Critical Quality Degradation"}
           </div>
         </div>
       </div>
@@ -204,10 +208,10 @@ export default function AiAnalysis({ shipments, onExecuteIntervention }) {
       {/* Explainability Box */}
       <div className="clean-card" style={{ background: "#FFFFFF", border: "1px solid #CBD5E1", marginTop: "24px" }}>
         <h4 style={{ fontSize: "1.1rem", color: "#2563EB", marginBottom: "14px", display: "flex", alignItems: "center", gap: "8px" }}>
-          <FileText size={18} /> AI Explainability Engine — Why Was This Spoilage Score Predicted?
+          <FileText size={18} /> Why Was This Score Predicted?
         </h4>
         <p style={{ fontSize: "0.9rem", color: "#475569", marginBottom: "16px" }}>
-          The decision support rules engine evaluated telemetry for <strong style={{ color: "#2563EB" }}>{shipment.shipment_id}</strong> against the <strong style={{ color: "#0F172A" }}>{shipment.storage_type}</strong> food preservation protocol and logged the following diagnostic reasons:
+          Telemetry evaluation for <strong style={{ color: "#2563EB" }}>{shipment.shipment_id}</strong>:
         </p>
         <ul style={{ listStyle: "none", paddingLeft: "10px" }}>
           {spoilRisk.reasons.map((reason, idx) => (
@@ -223,7 +227,7 @@ export default function AiAnalysis({ shipments, onExecuteIntervention }) {
 
       {/* ⚡ PRESCRIPTIVE TIMELY INTERVENTIONS WITH 1-CLICK EXECUTION */}
       <h3 style={{ margin: "28px 0 16px 0", fontSize: "1.25rem", color: "#0F172A", display: "flex", alignItems: "center", gap: "8px" }}>
-        <Zap color="#2563EB" /> Prescriptive Timely Interventions & Automated Execution
+        <Zap color="#2563EB" /> Recommended Interventions
       </h3>
       <div className="grid-cols-2">
         {recs.map((r, idx) => {
@@ -243,7 +247,7 @@ export default function AiAnalysis({ shipments, onExecuteIntervention }) {
                   <Rocket size={18} color="#2563EB" /> {r.action}
                 </h4>
                 <p style={{ fontSize: "0.88rem", color: "#475569", marginBottom: "16px" }}>
-                  <strong>AI Diagnostic Rationale:</strong> {r.reason}
+                  <strong>Rationale:</strong> {r.reason}
                 </p>
               </div>
               <div style={{ borderTop: `1px solid ${borderClass}`, paddingTop: "12px", textAlign: "right" }}>
@@ -252,7 +256,7 @@ export default function AiAnalysis({ shipments, onExecuteIntervention }) {
                   style={{ padding: "8px 16px", fontSize: "0.85rem", background: r.priority === "CRITICAL" ? "#E11D48" : r.priority === "HIGH" ? "#D97706" : "#059669" }}
                   onClick={() => onExecuteIntervention(shipment.shipment_id, r.action, "THERMAL_OVERRIDE")}
                 >
-                  ⚡ Execute Automated Intervention
+                  ⚡ Execute Action
                 </button>
               </div>
             </div>

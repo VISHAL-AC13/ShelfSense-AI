@@ -47,10 +47,10 @@ export default function LiveMonitoring({ shipments, onUpdateTelemetry, onExecute
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "24px" }}>
         <div>
           <h2 style={{ fontSize: "1.5rem", color: "#0F172A", display: "flex", alignItems: "center", gap: "10px" }}>
-            <Activity color="#2563EB" /> Real-Time 9-Zone Food Temperature Array
+            <Activity color="#2563EB" /> Live 9-Zone Thermal Array
           </h2>
           <p style={{ color: "#64748B", fontSize: "0.9rem", marginTop: "4px" }}>
-            Live thermal tracking across 9 multi-zone internal trailer sensors, humidity stability, and security door access.
+            Live temperature, humidity, and door security tracking.
           </p>
         </div>
         <div>
@@ -89,31 +89,28 @@ export default function LiveMonitoring({ shipments, onUpdateTelemetry, onExecute
           <div>
             <div className="kpi-title">Travel Duration</div>
             <div style={{ fontSize: "1.05rem", fontWeight: 700, color: "#0F172A", marginTop: "4px" }}>
-              {shipment.travel_duration}
+              {shipment.time_in_transit_hrs} Hours
             </div>
           </div>
           <div>
-            <div className="kpi-title">Storage Protocol Envelope</div>
-            <div style={{ fontSize: "1.05rem", fontWeight: 700, color: "#0F172A", marginTop: "4px" }}>
-              {shipment.storage_type}
-            </div>
-            <div style={{ fontSize: "0.75rem", color: "#64748B" }}>
-              ({profile.min_temp}°C to {profile.max_temp}°C)
+            <div className="kpi-title">Biological Shelf-Life</div>
+            <div style={{ fontSize: "1.05rem", fontWeight: 700, color: "#059669", marginTop: "4px" }}>
+              {shipment.remaining_shelf_life_days} Days
             </div>
           </div>
         </div>
       </div>
 
-      {/* ⚡ TIMELY INTERVENTION CONTROL DECK (The Solution Hero) */}
-      <div className="clean-card" style={{ background: "#FFFFFF", border: "1px solid #CBD5E1", marginBottom: "28px" }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "14px", borderBottom: "1px solid #E2E8F0", paddingBottom: "12px" }}>
+      {/* 1-Click Recovery Action Control Deck */}
+      <div className="clean-card" style={{ background: "#F0FDFA", border: "1px solid #0D9488" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px", borderBottom: "1px solid #CCFBF1", paddingBottom: "12px" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
             <div style={{ background: "#F1F5F9", color: "#2563EB", padding: "6px 10px", borderRadius: "8px", border: "1px solid #E2E8F0" }}>
               <Zap size={20} />
             </div>
             <div>
-              <h3 style={{ fontSize: "1.2rem", color: "#0F172A", margin: 0 }}>Timely Intervention Control Deck — Instant Corrective Action</h3>
-              <p style={{ fontSize: "0.82rem", color: "#64748B", margin: 0 }}>Dispatch automated commands to the refrigerated trailer IoT unit to counteract thermal excursions.</p>
+              <h3 style={{ fontSize: "1.2rem", color: "#0F172A", margin: 0 }}>Intervention Control Deck</h3>
+              <p style={{ fontSize: "0.82rem", color: "#64748B", margin: 0 }}>Dispatch automated IoT recovery commands.</p>
             </div>
           </div>
           <span style={{ background: "#F1F5F9", color: "#334155", padding: "6px 14px", borderRadius: "6px", fontSize: "0.8rem", fontWeight: 600, border: "1px solid #CBD5E1" }}>1-CLICK RECOVERY</span>
@@ -125,7 +122,7 @@ export default function LiveMonitoring({ shipments, onUpdateTelemetry, onExecute
               ❄️ Thermal Compressor Override
             </h4>
             <p style={{ fontSize: "0.8rem", color: "#64748B", marginBottom: "12px" }}>
-              Forces cooling compressor to super-chill by 1.5°C to offset warm door drafts or rear chamber drift.
+              Forces cooling compressor to chill by -1.5°C.
             </p>
             <button 
               className="btn-clean btn-primary" 
@@ -141,7 +138,7 @@ export default function LiveMonitoring({ shipments, onUpdateTelemetry, onExecute
               🛰️ Emergency Route Diversion
             </h4>
             <p style={{ fontSize: "0.8rem", color: "#64748B", marginBottom: "12px" }}>
-              Reroutes vehicle to the nearest certified refrigerated food depot within 25 km to unload perishable cargo.
+              Reroute to nearest certified depot.
             </p>
             <button 
               className="btn-clean btn-emerald" 
@@ -157,14 +154,14 @@ export default function LiveMonitoring({ shipments, onUpdateTelemetry, onExecute
               📦 QC Shelf-Life Salvage Alert
             </h4>
             <p style={{ fontSize: "0.8rem", color: "#64748B", marginBottom: "12px" }}>
-              Flags destination WMS for priority dock intake and immediate sensory quality evaluation upon arrival.
+              Flag for priority dock intake and quality check.
             </p>
             <button 
-              className="btn-clean btn-primary" 
-              style={{ width: "100%", padding: "8px", fontSize: "0.82rem", background: "#2563EB" }}
-              onClick={() => onExecuteIntervention(shipment.shipment_id, "WMS Priority QC Intake Flag Activated", "QC_ALERT")}
+              className="btn-clean btn-outline" 
+              style={{ width: "100%", padding: "8px", fontSize: "0.82rem", borderColor: "#D97706", color: "#D97706" }}
+              onClick={() => onExecuteIntervention(shipment.shipment_id, "Priority QC Unloading Alert Dispatched", "QC_ALERT")}
             >
-              ⚡ Flag Priority QC Intake
+              ⚡ Flag QC Unloading
             </button>
           </div>
         </div>
@@ -172,7 +169,7 @@ export default function LiveMonitoring({ shipments, onUpdateTelemetry, onExecute
 
       {/* 9 Temperature Sensors Grid (3x3) */}
       <h3 style={{ margin: "28px 0 16px 0", fontSize: "1.25rem", color: "#0F172A", display: "flex", alignItems: "center", gap: "8px" }}>
-        <Thermometer color="#2563EB" /> 9-Zone Refrigerated Trailer Thermal Array (°C)
+        <Thermometer color="#2563EB" /> 9-Zone Thermal Array (°C)
       </h3>
       <div className="sensor-grid-3x3">
         {(shipment.sensors || Array(9).fill(profile.target_temp)).map((val, idx) => {
@@ -182,11 +179,11 @@ export default function LiveMonitoring({ shipments, onUpdateTelemetry, onExecute
 
           if (val < profile.min_temp - 1.5 || val > profile.max_temp + 1.5) {
             cardClass += " critical";
-            badge = <span className="status-badge badge-critical">CRITICAL EXCURSION</span>;
+            badge = <span className="status-badge badge-critical">CRITICAL</span>;
             valColor = "#E11D48";
           } else if (val < profile.min_temp || val > profile.max_temp) {
             cardClass += " warning";
-            badge = <span className="status-badge badge-warning">ABNORMAL DRIFT</span>;
+            badge = <span className="status-badge badge-warning">WARNING</span>;
             valColor = "#D97706";
           }
 
@@ -201,47 +198,45 @@ export default function LiveMonitoring({ shipments, onUpdateTelemetry, onExecute
                 </span>
                 {badge}
               </div>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
-                <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "1.8rem", fontWeight: 800, color: valColor }}>
-                  {val.toFixed(1)} °C
-                </span>
-                <span style={{ fontSize: "0.78rem", color: "#64748B" }}>
-                  Target: {profile.target_temp}°C ({diffStr})
-                </span>
+              <div style={{ fontSize: "1.75rem", fontWeight: 800, color: valColor }}>
+                {val.toFixed(1)} °C
+              </div>
+              <div style={{ fontSize: "0.82rem", color: "#64748B", marginTop: "6px" }}>
+                Target: {profile.target_temp}°C (Δ {diffStr})
               </div>
             </div>
           );
         })}
       </div>
 
-      {/* Atmospheric Humidity & Security */}
+      {/* Environmental & Security Indicators */}
       <h3 style={{ margin: "28px 0 16px 0", fontSize: "1.25rem", color: "#0F172A", display: "flex", alignItems: "center", gap: "8px" }}>
-        <Droplets color="#059669" /> Chamber Humidity & Security Door Access
+        <ShieldAlert color="#059669" /> Environmental & Security Telemetry
       </h3>
       <div className="grid-cols-2">
         <div className="kpi-card" style={{ borderLeft: (40 <= shipment.humidity && shipment.humidity <= 88) ? "5px solid #059669" : "5px solid #D97706" }}>
           <div className="kpi-title" style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-            <Droplets size={16} color="#059669" /> Chamber Relative Humidity
+            <Droplets size={16} color="#059669" /> Relative Humidity
           </div>
           <div className="kpi-value" style={{ color: (40 <= shipment.humidity && shipment.humidity <= 88) ? "#059669" : "#D97706" }}>
             {shipment.humidity ? shipment.humidity.toFixed(1) : "75.0"} %
           </div>
           <div className="kpi-subtitle" style={{ color: "#64748B" }}>
-            {shipment.humidity > 88 ? "⚠️ High condensation & mold risk!" : shipment.humidity < 40 ? "⚠️ Produce wilting & desiccation risk!" : "✅ Optimal atmospheric preservation level"}
+            {shipment.humidity > 88 ? "⚠️ High humidity risk!" : shipment.humidity < 40 ? "⚠️ Desiccation risk!" : "✅ Optimal humidity"}
           </div>
         </div>
 
         <div className="kpi-card" style={{ borderLeft: shipment.door_openings <= profile.max_door_openings ? "5px solid #059669" : "5px solid #E11D48" }}>
           <div className="kpi-title" style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-            <Lock size={16} color={shipment.door_openings <= profile.max_door_openings ? "#059669" : "#E11D48"} /> Security Door Access Count
+            <Lock size={16} color={shipment.door_openings <= profile.max_door_openings ? "#059669" : "#E11D48"} /> Door Access Count
           </div>
           <div className="kpi-value" style={{ color: shipment.door_openings <= profile.max_door_openings ? "#059669" : "#E11D48" }}>
             {shipment.door_openings || 0} Events
           </div>
           <div className="kpi-subtitle" style={{ color: "#64748B" }}>
             {shipment.door_openings <= profile.max_door_openings 
-              ? `✅ Within protocol allowance (Limit: ${profile.max_door_openings})` 
-              : `🚨 VIOLATION: Exceeds limit (${profile.max_door_openings})! Increases warm air influx.`}
+              ? `✅ Within limit (${profile.max_door_openings})` 
+              : `🚨 Limit exceeded (${profile.max_door_openings})`}
           </div>
         </div>
       </div>
@@ -255,8 +250,8 @@ export default function LiveMonitoring({ shipments, onUpdateTelemetry, onExecute
           <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
             <Sliders size={22} color="#2563EB" />
             <div>
-              <h4 style={{ fontSize: "1.15rem", color: "#0F172A" }}>🎛️ Real-Time Telemetry Excursion Simulator (Interactive Demo Control)</h4>
-              <p style={{ fontSize: "0.82rem", color: "#64748B" }}>Simulate live IoT thermal drift or unauthorized door access to test the Timely Intervention Engine.</p>
+              <h4 style={{ fontSize: "1.15rem", color: "#0F172A" }}>🎛️ Telemetry Excursion Simulator</h4>
+              <p style={{ fontSize: "0.82rem", color: "#64748B" }}>Simulate IoT thermal drift and door events.</p>
             </div>
           </div>
           <span style={{ fontSize: "1.5rem", fontWeight: 800, color: "#2563EB" }}>{simOpen ? "−" : "+"}</span>
@@ -265,7 +260,7 @@ export default function LiveMonitoring({ shipments, onUpdateTelemetry, onExecute
         {simOpen && (
           <div style={{ marginTop: "24px", paddingTop: "24px", borderTop: "1px solid #E2E8F0" }}>
             <p style={{ fontSize: "0.9rem", color: "#475569", marginBottom: "24px" }}>
-              Adjust range sliders below to simulate severe environmental conditions on <strong>Sensor 9 (Rear Bottom near doors)</strong>. Clicking apply immediately triggers Spoilage Alarms and activates the Timely Intervention Deck!
+              Adjust sliders to test AI spoilage predictions and recovery triggers.
             </p>
 
             <div className="grid-cols-3">

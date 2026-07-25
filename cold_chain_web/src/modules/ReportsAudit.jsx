@@ -33,18 +33,18 @@ export default function ReportsAudit({ shipments }) {
     doc.setTextColor(37, 99, 235); // Primary Blue
     doc.setFontSize(18);
     doc.setFont("helvetica", "bold");
-    doc.text("ShelfSense AI -- Tamil Nadu Agri-Food Audit", 14, 20);
+    doc.text("ShelfSense AI -- Quality Assurance Audit", 14, 20);
 
     doc.setTextColor(71, 85, 105);
     doc.setFontSize(10);
     doc.setFont("helvetica", "normal");
-    doc.text("Certified FSSAI & HACCP Quality Assurance Compliance Document // Audited by: Vishal", 14, 28);
+    doc.text("FSSAI & HACCP Quality Assurance Document // Audited by: Vishal", 14, 28);
 
     // Section 1: Manifest Summary Table
     doc.setTextColor(15, 23, 42);
     doc.setFontSize(14);
     doc.setFont("helvetica", "bold");
-    doc.text("1. Tamil Nadu Food Consignment Manifest & Routing Specifications", 14, 48);
+    doc.text("1. Shipment Manifest & Routing", 14, 48);
 
     autoTable(doc, {
       startY: 53,
@@ -130,10 +130,10 @@ export default function ReportsAudit({ shipments }) {
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "24px" }}>
         <div>
           <h2 style={{ fontSize: "1.5rem", color: "#0F172A", display: "flex", alignItems: "center", gap: "10px" }}>
-            <FileText color="#2563EB" /> FSSAI & HACCP Tamil Nadu Quality Audit Reports
+            <FileText color="#2563EB" /> Quality Audit Reports
           </h2>
           <p style={{ color: "#64748B", fontSize: "0.9rem", marginTop: "4px" }}>
-            Generate, inspect, and export certified 1-click jsPDF food safety documentation for Tamil Nadu FSSAI and QA verification.
+            Export certified FSSAI food safety documentation and AI compliance logs.
           </p>
         </div>
         <div>
@@ -157,9 +157,9 @@ export default function ReportsAudit({ shipments }) {
         <div style={{ display: "flex", alignItems: "center", gap: "14px" }}>
           <ShieldCheck size={32} color="#059669" />
           <div>
-            <h3 style={{ fontSize: "1.2rem", color: "#0F172A" }}>Ready for Tamil Nadu Compliance Export — {shipment.shipment_id}</h3>
+            <h3 style={{ fontSize: "1.2rem", color: "#0F172A" }}>Compliance Export — {shipment.shipment_id}</h3>
             <p style={{ fontSize: "0.85rem", color: "#475569" }}>
-              Includes all 9 thermal sensor logs, AI spoilage predictions, and prescriptive shelf-life actions for TN highways.
+              Certified telemetry, AI spoilage predictions, and preventive actions.
             </p>
           </div>
         </div>
@@ -168,18 +168,18 @@ export default function ReportsAudit({ shipments }) {
           style={{ padding: "14px 28px", fontSize: "1rem", boxShadow: "0 4px 6px rgba(5, 150, 105, 0.15)" }}
           onClick={handleDownloadPDF}
         >
-          <Download size={20} /> Download Certified TN FSSAI PDF
+          <Download size={18} /> Download Audit PDF
         </button>
       </div>
 
       {/* On-Screen Audit Preview Accordion */}
       <div className="clean-card">
         <h3 style={{ fontSize: "1.25rem", color: "#2563EB", marginBottom: "20px", borderBottom: "1px solid #E2E8F0", paddingBottom: "12px", display: "flex", alignItems: "center", gap: "8px" }}>
-          📑 On-Screen Tamil Nadu Food Safety Audit Preview // Manifest #{shipment.shipment_id}
+          📑 On-Screen Audit Preview — #{shipment.shipment_id}
         </h3>
 
         {/* Section 1 */}
-        <h4 style={{ color: "#0F172A", fontSize: "1rem", marginBottom: "12px" }}>1. Tamil Nadu Food Consignment Manifest & Routing Specifications</h4>
+        <h4 style={{ color: "#0F172A", fontSize: "1rem", marginBottom: "12px" }}>1. Consignment Manifest & Routing</h4>
         <div className="grid-cols-4" style={{ background: "#F8FAFC", padding: "16px", borderRadius: "12px", marginBottom: "24px", border: "1px solid #E2E8F0" }}>
           <div>
             <span style={{ fontSize: "0.75rem", color: "#64748B", fontWeight: 600 }}>FOOD PRODUCT:</span>
@@ -200,7 +200,7 @@ export default function ReportsAudit({ shipments }) {
         </div>
 
         {/* Section 2 */}
-        <h4 style={{ color: "#0F172A", fontSize: "1rem", marginBottom: "12px" }}>2. Multi-Zone Thermal Array & Telemetry Summary</h4>
+        <h4 style={{ color: "#0F172A", fontSize: "1rem", marginBottom: "12px" }}>2. Thermal Array & Telemetry</h4>
         <div className="table-responsive" style={{ marginBottom: "24px" }}>
           <table className="table-clean">
             <thead>
@@ -253,7 +253,7 @@ export default function ReportsAudit({ shipments }) {
         </div>
 
         {/* Section 3 */}
-        <h4 style={{ color: "#0F172A", fontSize: "1rem", marginBottom: "12px" }}>3. AI Spoilage Prediction & Quality Explainability</h4>
+        <h4 style={{ color: "#0F172A", fontSize: "1rem", marginBottom: "12px" }}>3. AI Spoilage Prediction & Quality</h4>
         <div style={{ background: "#F8FAFC", border: "1px solid #CBD5E1", padding: "16px", borderRadius: "12px", marginBottom: "24px" }}>
           <div style={{ display: "flex", gap: "20px", marginBottom: "12px", fontSize: "0.95rem" }}>
             <span><strong>Predicted Spoilage Score:</strong> <span style={{ color: "#E11D48", fontWeight: 700 }}>{spoilRisk.risk_score} / 10 ({spoilRisk.spoilage_risk})</span></span>
@@ -268,14 +268,14 @@ export default function ReportsAudit({ shipments }) {
         </div>
 
         {/* Section 4 */}
-        <h4 style={{ color: "#0F172A", fontSize: "1rem", marginBottom: "12px" }}>4. Prescriptive Shelf-Life Preventive Actions (TN Fleet)</h4>
+        <h4 style={{ color: "#0F172A", fontSize: "1rem", marginBottom: "12px" }}>4. Recommended Actions</h4>
         <div className="table-responsive">
           <table className="table-clean">
             <thead>
               <tr>
                 <th>Priority</th>
-                <th>Prescriptive Preventive Intervention</th>
-                <th>AI Spoilage Diagnostic Rationale</th>
+                <th>Recommended Action</th>
+                <th>AI Rationale</th>
               </tr>
             </thead>
             <tbody>

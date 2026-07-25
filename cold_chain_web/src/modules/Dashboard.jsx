@@ -200,8 +200,7 @@ export default function Dashboard({ shipments, onSelectShipment, setActiveTab, o
   };
 
   return (
-    <div>
-      {/* ⚡ THE CORE SOLUTION: Timely Intervention & Automated Action Center */}
+    <div>      {/* ⚡ THE CORE SOLUTION: Timely Intervention & Automated Action Center */}
       <div className="clean-card" style={{ background: "#FFFFFF", border: "1px solid #CBD5E1", marginBottom: "28px" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px", borderBottom: "1px solid #E2E8F0", paddingBottom: "12px" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
@@ -209,8 +208,8 @@ export default function Dashboard({ shipments, onSelectShipment, setActiveTab, o
               <Zap size={22} />
             </div>
             <div>
-              <h3 style={{ fontSize: "1.25rem", color: "#0F172A", margin: 0 }}>Timely Intervention & Automated Recommendation Engine</h3>
-              <p style={{ fontSize: "0.85rem", color: "#64748B", margin: 0, fontWeight: 500 }}>The Core Solution: 1-Click Automated Telemetry Overrides & Route Diversions to Salvage Food Shelf-Life</p>
+              <h3 style={{ fontSize: "1.25rem", color: "#0F172A", margin: 0 }}>Automated Interventions</h3>
+              <p style={{ fontSize: "0.85rem", color: "#64748B", margin: 0, fontWeight: 500 }}>1-Click telemetry overrides and route diversions.</p>
             </div>
           </div>
           <span style={{ background: "#F1F5F9", color: "#334155", padding: "6px 14px", borderRadius: "6px", fontSize: "0.82rem", fontWeight: 600, border: "1px solid #CBD5E1" }}>
@@ -221,12 +220,12 @@ export default function Dashboard({ shipments, onSelectShipment, setActiveTab, o
         {urgentInterventions.length === 0 ? (
           <div style={{ textAlign: "center", padding: "20px", background: "white", borderRadius: "12px", border: "1px solid #A7F3D0", color: "#059669", fontWeight: 700, display: "flex", alignItems: "center", justify: "center", gap: "10px" }}>
             <ShieldCheck size={24} />
-            <span>✅ All perishable food consignments are currently in nominal condition! No immediate timely interventions required.</span>
+            <span>✅ All consignments nominal. No interventions required.</span>
           </div>
         ) : (
           <div>
             <div style={{ fontSize: "0.9rem", color: "#475569", marginBottom: "14px", fontWeight: 600 }}>
-              🚨 Urgent Action Required: {urgentInterventions.length} consignment(s) displaying thermal excursions or elevated Spoilage Scores:
+              🚨 {urgentInterventions.length} consignment(s) require attention:
             </div>
             <div className="grid-cols-2" style={{ marginBottom: 0 }}>
               {urgentInterventions.map((u) => (
@@ -275,7 +274,7 @@ export default function Dashboard({ shipments, onSelectShipment, setActiveTab, o
             <Apple size={16} color="#2563EB" /> Total Consignments
           </div>
           <div className="kpi-value">{total}</div>
-          <div className="kpi-subtitle">Monitored Perishables & Food Loads</div>
+          <div className="kpi-subtitle">Monitored loads</div>
         </div>
 
         <div className="kpi-card">
@@ -283,7 +282,7 @@ export default function Dashboard({ shipments, onSelectShipment, setActiveTab, o
             <Truck size={16} color="#2563EB" /> Active In Transit
           </div>
           <div className="kpi-value" style={{ color: "#2563EB" }}>{active}</div>
-          <div className="kpi-subtitle">Refrigerated Trucks En Route</div>
+          <div className="kpi-subtitle">Trucks en route</div>
         </div>
 
         <div className="kpi-card">
@@ -291,7 +290,7 @@ export default function Dashboard({ shipments, onSelectShipment, setActiveTab, o
             <CheckCircle2 size={16} color="#059669" /> Delivered Foods
           </div>
           <div className="kpi-value" style={{ color: "#059669" }}>{delivered}</div>
-          <div className="kpi-subtitle">Verified Freshness at Destination</div>
+          <div className="kpi-subtitle">Completed deliveries</div>
         </div>
 
         <div className="kpi-card">
@@ -300,19 +299,19 @@ export default function Dashboard({ shipments, onSelectShipment, setActiveTab, o
           </div>
           <div className="kpi-value" style={{ color: alertsCount > 0 ? "#E11D48" : "#059669" }}>{alertsCount}</div>
           <div className="kpi-subtitle">
-            {alertsCount > 0 ? "⚠️ Immediate Action Required" : "✅ All Produce Conditions Optimal"}
+            {alertsCount > 0 ? "⚠️ Action required" : "✅ Optimal"}
           </div>
         </div>
       </div>
 
-      {/* 3 Middle KPI Cards */}
+      {/* 3 Secondary KPI Cards */}
       <div className="grid-cols-3">
         <div className="kpi-card">
           <div className="kpi-title" style={{ display: "flex", alignItems: "center", gap: "6px" }}>
             <Thermometer size={16} color="#2563EB" /> Avg Produce Temp
           </div>
           <div className="kpi-value" style={{ color: "#2563EB" }}>{avgTemp} °C</div>
-          <div className="kpi-subtitle">Across Active 9-Zone Trailer Sensors</div>
+          <div className="kpi-subtitle">Active 9-zone sensors</div>
         </div>
 
         <div className="kpi-card">
@@ -320,7 +319,7 @@ export default function Dashboard({ shipments, onSelectShipment, setActiveTab, o
             <Droplets size={16} color="#059669" /> Avg Chamber Humidity
           </div>
           <div className="kpi-value" style={{ color: "#059669" }}>{avgHum} %</div>
-          <div className="kpi-subtitle">Optimal Moisture Protection Level</div>
+          <div className="kpi-subtitle">Optimal humidity level</div>
         </div>
 
         <div className="kpi-card">
@@ -331,13 +330,13 @@ export default function Dashboard({ shipments, onSelectShipment, setActiveTab, o
             {avgHealth} %
           </div>
           <div className="kpi-subtitle">
-            {avgHealth >= 85 ? "🟢 Prime Quality & Shelf-Life" : "🟡 Moderate Degradation Risk"}
+            {avgHealth >= 85 ? "🟢 Prime Quality" : "🟡 Moderate Degradation Risk"}
           </div>
         </div>
       </div>
 
       {/* Charts Row */}
-      <h3 style={{ marginBottom: "16px", fontSize: "1.2rem", color: "#0F172A" }}>Thermal Trends & Spoilage Risk Analytics</h3>
+      <h3 style={{ marginBottom: "16px", fontSize: "1.2rem", color: "#0F172A" }}>Analytics Overview</h3>
       <div className="grid-cols-3">
         <div className="clean-card" style={{ marginBottom: 0 }}>
           <div style={{ fontSize: "0.95rem", fontWeight: 700, color: "#0F172A", marginBottom: "12px" }}>24-Hr Temperature Trend (°C)</div>
@@ -362,26 +361,26 @@ export default function Dashboard({ shipments, onSelectShipment, setActiveTab, o
       </div>
 
       {/* Operational Tables */}
-      <h3 style={{ margin: "28px 0 16px 0", fontSize: "1.2rem", color: "#0F172A" }}>Food Consignment Intelligence & Activity</h3>
+      <h3 style={{ margin: "28px 0 16px 0", fontSize: "1.2rem", color: "#0F172A" }}>Consignments & Activity</h3>
       <div className="clean-card">
         <div className="clean-tabs-nav">
           <button 
             className={`clean-tab-btn ${activeTableTab === "recent" ? "active" : ""}`}
             onClick={() => setActiveTableTab("recent")}
           >
-            🍎 Monitored Food Shipments
+            🍎 Consignments
           </button>
           <button 
             className={`clean-tab-btn ${activeTableTab === "recs" ? "active" : ""}`}
             onClick={() => setActiveTableTab("recs")}
           >
-            ⚡ Timely AI Recommendations ({allRecs.length})
+            ⚡ AI Actions ({allRecs.length})
           </button>
           <button 
             className={`clean-tab-btn ${activeTableTab === "alerts" ? "active" : ""}`}
             onClick={() => setActiveTableTab("alerts")}
           >
-            🚨 Active Excursion Alarms ({allAlerts.length})
+            🚨 Alarms ({allAlerts.length})
           </button>
         </div>
 

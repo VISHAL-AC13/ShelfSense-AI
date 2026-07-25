@@ -72,10 +72,10 @@ export default function RegisterShipment({ onRegisterShipment, setActiveTab }) {
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px", borderBottom: "1px solid #E2E8F0", paddingBottom: "16px" }}>
         <div>
           <h2 style={{ fontSize: "1.5rem", color: "#0F172A", display: "flex", alignItems: "center", gap: "10px" }}>
-            <Apple color="#2563EB" /> Register New Perishable Food Consignment (Tamil Nadu Hubs)
+            <Apple color="#2563EB" /> Register New Shipment
           </h2>
           <p style={{ color: "#64748B", fontSize: "0.9rem", marginTop: "4px" }}>
-            Enter perishable food specifications, storage protocol tolerances, and Tamil Nadu GPS coordinates to activate real-time telemetry.
+            Enter shipment details to activate real-time tracking.
           </p>
         </div>
       </div>
@@ -95,7 +95,7 @@ export default function RegisterShipment({ onRegisterShipment, setActiveTab }) {
           <div style={{ display: "flex", alignItems: "center", gap: "12px", color: "#059669" }}>
             <CheckCircle2 size={24} />
             <div>
-              <strong style={{ fontSize: "1.05rem", color: "#0F172A" }}>✅ Manifest Successfully Persisted to Store!</strong>
+              <strong style={{ fontSize: "1.05rem", color: "#0F172A" }}>✅ Shipment Registered Successfully!</strong>
               <p style={{ fontSize: "0.9rem", marginTop: "4px", color: "#475569" }}>{successMsg}</p>
             </div>
           </div>
@@ -111,7 +111,7 @@ export default function RegisterShipment({ onRegisterShipment, setActiveTab }) {
 
       <form onSubmit={handleSubmit}>
         <h4 style={{ color: "#2563EB", marginBottom: "16px", fontSize: "1.1rem", display: "flex", alignItems: "center", gap: "8px" }}>
-          1. Food Consignment Specifications & Storage Protocol
+          1. Shipment Specifications
         </h4>
         <div className="grid-cols-2">
           <div className="form-group">
@@ -127,37 +127,34 @@ export default function RegisterShipment({ onRegisterShipment, setActiveTab }) {
           </div>
 
           <div className="form-group">
-            <label className="form-label">Food Category *</label>
-            <select 
-              className="form-select" 
+            <label className="form-label">Product Category *</label>
+            <input 
+              type="text" 
+              className="form-input" 
               name="product_category" 
               value={formData.product_category} 
-              onChange={handleChange}
-            >
-              <option>Fresh Fruits</option>
-              <option>Leafy Vegetables</option>
-              <option>Tropical Fruits</option>
-              <option>Seafood</option>
-              <option>Prime Dairy</option>
-              <option>Frozen Meats</option>
-            </select>
+              onChange={handleChange} 
+              required 
+            />
           </div>
+        </div>
 
+        <div className="grid-cols-2">
           <div className="form-group">
-            <label className="form-label">Food Product Name *</label>
+            <label className="form-label">Product Name / Description *</label>
             <input 
               type="text" 
               className="form-input" 
               name="product" 
               value={formData.product} 
               onChange={handleChange} 
-              placeholder="e.g. Nilgiri Strawberries, Salem Alphonso Mangoes, Oddanchatram Keerai" 
+              placeholder="e.g. Ooty Strawberries" 
               required 
             />
           </div>
 
           <div className="form-group">
-            <label className="form-label">Storage Profile Envelope *</label>
+            <label className="form-label">Storage Profile *</label>
             <select 
               className="form-select" 
               name="storage_type" 
@@ -175,7 +172,7 @@ export default function RegisterShipment({ onRegisterShipment, setActiveTab }) {
 
         {/* Protocol Summary Card */}
         <div style={{ background: "#EFF6FF", border: "1px solid #BFDBFE", padding: "14px 18px", borderRadius: "12px", marginBottom: "24px" }}>
-          <strong style={{ color: "#1D4ED8", fontSize: "0.85rem", textTransform: "uppercase" }}>ℹ️ Active Food Safety Protocol Tolerances:</strong>
+          <strong style={{ color: "#1D4ED8", fontSize: "0.85rem", textTransform: "uppercase" }}>ℹ️ Active Safety Protocol:</strong>
           <div style={{ display: "flex", gap: "24px", marginTop: "6px", fontSize: "0.9rem", color: "#0F172A" }}>
             <span><strong>Target Temp:</strong> {currentProfile.target_temp} °C</span>
             <span><strong>Max Temp Ceiling:</strong> {currentProfile.max_temp} °C</span>
@@ -185,12 +182,12 @@ export default function RegisterShipment({ onRegisterShipment, setActiveTab }) {
         </div>
 
         <h4 style={{ color: "#2563EB", marginBottom: "16px", fontSize: "1.1rem", display: "flex", alignItems: "center", gap: "8px" }}>
-          2. Tamil Nadu Transport Assignment & Logistics Routing
+          2. Transport & Routing
         </h4>
         <div className="grid-cols-2">
           <div className="form-group">
             <label className="form-label" style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-              <Truck size={15} color="#2563EB" /> Vehicle Number (TN Reg) *
+              <Truck size={15} color="#2563EB" /> Vehicle Number *
             </label>
             <input 
               type="text" 
@@ -220,7 +217,7 @@ export default function RegisterShipment({ onRegisterShipment, setActiveTab }) {
 
           <div className="form-group">
             <label className="form-label" style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-              <MapPin size={15} color="#059669" /> Origin Agri-Hub / City (TN) *
+              <MapPin size={15} color="#059669" /> Origin (TN) *
             </label>
             <input 
               type="text" 
@@ -234,7 +231,7 @@ export default function RegisterShipment({ onRegisterShipment, setActiveTab }) {
 
           <div className="form-group">
             <label className="form-label" style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-              <MapPin size={15} color="#E11D48" /> Destination Market / City (TN) *
+              <MapPin size={15} color="#E11D48" /> Destination (TN) *
             </label>
             <input 
               type="text" 
@@ -247,7 +244,7 @@ export default function RegisterShipment({ onRegisterShipment, setActiveTab }) {
           </div>
 
           <div className="form-group">
-            <label className="form-label">Origin GPS Coordinates (Lat, Lon)</label>
+            <label className="form-label">Origin GPS (Lat, Lon)</label>
             <div style={{ display: "flex", gap: "10px" }}>
               <input type="number" step="0.0001" className="form-input" name="origin_lat" value={formData.origin_lat} onChange={handleChange} />
               <input type="number" step="0.0001" className="form-input" name="origin_lon" value={formData.origin_lon} onChange={handleChange} />
@@ -255,7 +252,7 @@ export default function RegisterShipment({ onRegisterShipment, setActiveTab }) {
           </div>
 
           <div className="form-group">
-            <label className="form-label">Destination GPS Coordinates (Lat, Lon)</label>
+            <label className="form-label">Destination GPS (Lat, Lon)</label>
             <div style={{ display: "flex", gap: "10px" }}>
               <input type="number" step="0.0001" className="form-input" name="dest_lat" value={formData.dest_lat} onChange={handleChange} />
               <input type="number" step="0.0001" className="form-input" name="dest_lon" value={formData.dest_lon} onChange={handleChange} />
@@ -265,7 +262,7 @@ export default function RegisterShipment({ onRegisterShipment, setActiveTab }) {
 
         <div className="form-group" style={{ marginTop: "10px" }}>
           <label className="form-label" style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-            <Calendar size={15} color="#D97706" /> Expected Delivery Date & Time (ETA)
+            <Calendar size={15} color="#D97706" /> Expected Delivery (ETA)
           </label>
           <input 
             type="text" 
@@ -279,7 +276,7 @@ export default function RegisterShipment({ onRegisterShipment, setActiveTab }) {
 
         <div style={{ marginTop: "30px", borderTop: "1px solid #E2E8F0", paddingTop: "20px" }}>
           <button type="submit" className="btn-clean btn-primary" style={{ width: "100%", padding: "16px", fontSize: "1.05rem" }}>
-            <Rocket size={20} /> Register Consignment & Activate Telemetry Array
+            <Rocket size={20} /> Register Shipment & Activate Tracking
           </button>
         </div>
       </form>

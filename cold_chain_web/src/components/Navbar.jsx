@@ -5,13 +5,13 @@ import { Sparkles, Shield, Clock, Zap, RefreshCw, Menu } from "lucide-react";
 export default function Navbar({ activeTab, activeInterventions, onResetDemo, onToggleMobile }) {
   const getTitle = () => {
     switch (activeTab) {
-      case "dashboard": return "Tamil Nadu Agri-Food Fleet Dashboard & Timely Intervention Center";
-      case "register": return "Register New Perishable Food Consignment (TN Hubs)";
-      case "live": return "Real-Time 9-Zone Thermal Array & Automated TN Intervention Deck";
-      case "ai": return "Timely Intervention & AI Prescriptive Recommendation System";
-      case "gps": return "Live GPS Route Trajectory & Remaining Shelf-Life Telemetry (TN Map)";
-      case "reports": return "Quality Assurance & FSSAI / HACCP Regulatory Audit Export";
-      default: return "Tamil Nadu Timely Intervention & Recommendation System";
+      case "dashboard": return "Fleet Dashboard";
+      case "register": return "Register Shipment";
+      case "live": return "Live Thermal Monitoring";
+      case "ai": return "AI Interventions";
+      case "gps": return "Live GPS Route Tracking";
+      case "reports": return "Quality Audit Reports";
+      default: return "ShelfSense AI";
     }
   };
 
