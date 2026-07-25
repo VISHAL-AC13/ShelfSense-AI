@@ -39,7 +39,7 @@ def render_reports():
         st.markdown(f"""
         <div style="color: #1E40AF;">
             <strong style="font-size: 1.1rem;">📄 Official Executive PDF Report Ready for Export</strong><br>
-            <span style="font-size: 0.85rem;">Includes 256-Bit SHA-3 verification hash, 9-zone thermal telemetry array, ML risk metrics, and prescriptive action plan.</span>
+            <span style="font-size: 0.85rem;">Includes digital verification checksum, 9-zone thermal telemetry array, ML risk metrics, and recommended action plan.</span>
         </div>
         """, unsafe_allow_html=True)
     with col_d2:

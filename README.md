@@ -33,14 +33,14 @@ While conventional cold chain tracking systems act as passive monitors that mere
 * **Corridor Congestion Intelligence**: Classifies live highway transit conditions (`Heavy Traffic Congestion on Highway`, `Moderate Slowdown on Highway Corridor`, or `Nominal Highway Cruising Velocity -- Clear Traffic Flow`) and applies delay penalties.
 * **Biological Shelf-Life Modeling**: Calculates the remaining viable biological shelf-life for perishable cargo (e.g., Nilgiri Strawberries, Salem Mangoes, Thoothukudi Seer Fish) by deducting degradation time caused by thermal excursions and highway traffic bottlenecks.
 
-### 5. 📑 FSSAI & HACCP Quality Assurance Audit PDF Export
-* **1-Click Compliance Reporting**: Generates certified, professional PDF audit documents using `jsPDF` for food safety inspection and regulatory export.
-* **Comprehensive Documentation**: Contains full consignment manifests, multi-zone thermal array tables, AI spoilage diagnostics, SHA-3 cryptographic integrity hashes, and verification sign-off by **Vishal (Senior Quality Inspector)**.
+### 5. 📑 Quality Assurance & Compliance Audit PDF Export
+* **1-Click Compliance Reporting**: Generates certified, professional PDF audit documents using `jsPDF` for food quality inspections and record-keeping.
+* **Comprehensive Documentation**: Contains full consignment manifests, multi-zone thermal array tables, anomaly diagnostics, digital verification checksums, and sign-off by Quality Assurance officers.
 
-### 6. 🏢 Strict Tamil Nadu Localization & Executive UI Design
-* **100% Tamil Nadu Ecosystem**: All agricultural origin hubs (Ooty, Theni, Thoothukudi, Oddanchatram, Erode) and destination markets (Koyambedu, Madurai Central, Coimbatore Ukkadam, Trichy Gandhi Market) are tailored to Tamil Nadu.
-* **Unified Vishal Persona**: All drivers and quality assurance officers operate under the **Vishal** persona (`Vishal S.`, `Vishal K.`, `Vishal R.`, `Vishal M.`, `Vishal G.`).
-* **Stripe / Apple Executive Aesthetic**: Designed with a calm, professional white theme (`#FFFFFF` cards with `#CBD5E1` slate borders and `#2563EB` royal blue accents), eliminating distracting animations or neon flashiness.
+### 6. 🏢 Tamil Nadu Logistics Corridors & Professional UI Design
+* **100% Tamil Nadu Ecosystem**: All agricultural origin hubs (Ooty, Theni, Thoothukudi, Oddanchatram, Erode) and destination markets (Koyambedu, Madurai Central, Coimbatore Ukkadam, Trichy Gandhi Market) model real supply chain corridors in Tamil Nadu.
+* **Authentic Operational Roles**: Modeled with realistic driver profiles and role-based portal access (Operations Admin, Logistics Manager, Quality Inspector).
+* **Modern Executive Aesthetic**: Designed with a clean, professional interface (`#FFFFFF` cards with `#CBD5E1` slate borders and `#2563EB` royal blue accents), prioritizing readability and quick data ingestion over distracting animations.
 
 ---
 

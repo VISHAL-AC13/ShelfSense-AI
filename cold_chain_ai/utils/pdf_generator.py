@@ -179,7 +179,7 @@ def generate_shipment_pdf(shipment, transport_eval, spoilage_eval, health_score,
         
     story.append(Spacer(1, 20))
     story.append(HRFlowable(width="100%", thickness=1, color=colors.HexColor('#CBD5E1'), spaceAfter=10))
-    story.append(Paragraph("<b>Certified by AETHER Autonomous Cold Chain AI Decision Core</b> // System Signature: Verified 256-Bit SHA-3", subtitle_style))
+    story.append(Paragraph("<b>Certified by ShelfSense Quality Assurance Core</b> // Digital Verification Checksum: Verified Trip Manifest", subtitle_style))
     
     doc.build(story)
     buffer.seek(0)

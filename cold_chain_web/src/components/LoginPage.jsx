@@ -11,8 +11,8 @@ export default function LoginPage({ onLogin }) {
   const demoAccounts = [
     {
       id: "admin",
-      name: "System Admin",
-      role: "Chief Quality Officer & Fleet Admin",
+      name: "Quality & Fleet Admin",
+      role: "Operations & Quality Assurance Lead",
       email: "admin@shelfsense.ai",
       hub: "Oddanchatram / Koyambedu Hubs, TN",
       badge: "Full Access",
@@ -23,7 +23,7 @@ export default function LoginPage({ onLogin }) {
     {
       id: "logistics",
       name: "Logistics Manager",
-      role: "Tamil Nadu Highway Logistics Lead",
+      role: "Fleet & Transit Operations Manager",
       email: "logistics@shelfsense.ai",
       hub: "NH-44 & NH-48 Transit Corridors",
       badge: "Fleet Ops",
@@ -33,11 +33,11 @@ export default function LoginPage({ onLogin }) {
     },
     {
       id: "auditor",
-      name: "Regulatory Auditor",
-      role: "Government Cold-Chain Inspector",
+      name: "Quality Inspector",
+      role: "Food Safety & Compliance Officer",
       email: "auditor@shelfsense.ai",
-      hub: "FSSAI Regional Office, Chennai",
-      badge: "Regulatory",
+      hub: "Quality Assurance Division, Chennai",
+      badge: "Compliance",
       badgeColor: "#D97706",
       bg: "#FFFBEB",
       border: "#FDE68A"
@@ -147,10 +147,10 @@ export default function LoginPage({ onLogin }) {
             </div>
 
             <h1 style={{ fontSize: "2.2rem", fontWeight: 800, lineHeight: 1.2, marginBottom: "16px", color: "#FFFFFF" }}>
-              Next-Gen Cold-Chain Intelligence.
+              Smart Cold-Chain Assurance & Logistics.
             </h1>
             <p style={{ color: "#94A3B8", fontSize: "1rem", lineHeight: 1.6, marginBottom: "36px" }}>
-              Real-time telemetry, IoT thermal monitoring, and automated AI prescriptive interventions for Tamil Nadu's perishable agriculture network.
+              Real-time IoT temperature tracking, predictive risk alerts, and automated route optimization to minimize post-harvest transit losses across Tamil Nadu.
             </p>
 
             <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
@@ -159,8 +159,8 @@ export default function LoginPage({ onLogin }) {
                   <ShieldCheck size={20} />
                 </div>
                 <div>
-                  <div style={{ fontWeight: 600, fontSize: "0.95rem", color: "#F1F5F9" }}>FSSAI & HACCP Compliant</div>
-                  <div style={{ fontSize: "0.8rem", color: "#64748B" }}>Automated audit logging & cryptographic SHA-3 verification</div>
+                  <div style={{ fontWeight: 600, fontSize: "0.95rem", color: "#F1F5F9" }}>Digital Audit Manifests & Compliance</div>
+                  <div style={{ fontSize: "0.8rem", color: "#64748B" }}>Automated temperature logging and tamper-proof digital trip reports for quality assurance</div>
                 </div>
               </div>
 
@@ -169,8 +169,8 @@ export default function LoginPage({ onLogin }) {
                   <Zap size={20} />
                 </div>
                 <div>
-                  <div style={{ fontWeight: 600, fontSize: "0.95rem", color: "#F1F5F9" }}>AI Spoilage Prevention</div>
-                  <div style={{ fontSize: "0.8rem", color: "#64748B" }}>Predictive shelf-life decay models & dynamic GPS rerouting</div>
+                  <div style={{ fontWeight: 600, fontSize: "0.95rem", color: "#F1F5F9" }}>Early Warning & Anomaly Detection</div>
+                  <div style={{ fontSize: "0.8rem", color: "#64748B" }}>Proactive thermal excursion alerts with recommendations for nearest cold-storage depot diversion</div>
                 </div>
               </div>
 
@@ -179,16 +179,16 @@ export default function LoginPage({ onLogin }) {
                   <Building2 size={20} />
                 </div>
                 <div>
-                  <div style={{ fontWeight: 600, fontSize: "0.95rem", color: "#F1F5F9" }}>Tamil Nadu Agri-Hubs</div>
-                  <div style={{ fontSize: "0.8rem", color: "#64748B" }}>Oddanchatram, Koyambedu, Nilgiris & Salem corridors</div>
+                  <div style={{ fontWeight: 600, fontSize: "0.95rem", color: "#F1F5F9" }}>Tamil Nadu Agri-Logistics Corridors</div>
+                  <div style={{ fontSize: "0.8rem", color: "#64748B" }}>End-to-end monitoring across Koyambedu, Oddanchatram, Nilgiris, and Salem supply routes</div>
                 </div>
               </div>
             </div>
           </div>
 
           <div style={{ marginTop: "40px", borderTop: "1px solid rgba(255,255,255,0.1)", paddingTop: "20px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <span style={{ fontSize: "0.8rem", color: "#64748B" }}>© 2026 ShelfSense AI Systems</span>
-            <span style={{ fontSize: "0.78rem", background: "rgba(255,255,255,0.1)", padding: "4px 10px", borderRadius: "20px", color: "#E2E8F0" }}>v3.4 Enterprise</span>
+            <span style={{ fontSize: "0.8rem", color: "#64748B" }}>© 2026 ShelfSense Platform</span>
+            <span style={{ fontSize: "0.78rem", background: "rgba(255,255,255,0.1)", padding: "4px 10px", borderRadius: "20px", color: "#E2E8F0" }}>Production Build</span>
           </div>
         </div>
 
@@ -371,7 +371,7 @@ export default function LoginPage({ onLogin }) {
               }}
             >
               {loading ? (
-                <span>Authenticating Telemetry Access...</span>
+                <span>Authenticating Portal Access...</span>
               ) : (
                 <>
                   <Zap size={18} />
@@ -382,7 +382,7 @@ export default function LoginPage({ onLogin }) {
           </form>
 
           <div style={{ marginTop: "24px", textAlign: "center", fontSize: "0.82rem", color: "#64748B" }}>
-            🔒 Protected by 256-bit FSSAI Enterprise Encryption
+            🔒 Secure Role-Based Access Control & Encrypted Telemetry Transport
           </div>
         </div>
       </div>
