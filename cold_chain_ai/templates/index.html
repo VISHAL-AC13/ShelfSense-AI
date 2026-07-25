@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Leaflet Map -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-title">AETHER AI</div>
+                <div class="logo-subtitle">Cold Chain Decision Core</div>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item"><a class="nav-link active" data-section="section-dashboard"><span class="nav-icon">📊</span> 1. Dashboard</a></li>
+                <li class="nav-item"><a class="nav-link" data-section="section-register"><span class="nav-icon">📝</span> 2. Register Shipment</a></li>
+                <li class="nav-item"><a class="nav-link" data-section="section-live"><span class="nav-icon">📡</span> 3. Live Monitoring</a></li>
+                <li class="nav-item"><a class="nav-link" data-section="section-ai"><span class="nav-icon">🧠</span> 4. AI Analysis</a></li>
+                <li class="nav-item"><a class="nav-link" data-section="section-gps"><span class="nav-icon">🛰️</span> 5. GPS Tracking</a></li>
+                <li class="nav-item"><a class="nav-link" data-section="section-reports"><span class="nav-icon">📑</span> 6. Reports & Audit</a></li>
+            </ul>
+            <div class="sidebar-footer">
+                <div style="margin-bottom: 4px;"><strong>Storage:</strong> {% if use_mongo %}<span style="color:#6EE7B7;">🟢 MongoDB</span>{% else %}<span style="color:#93C5FD;">🔵 Local JSON</span>{% endif %}</div>
+                <div style="margin-bottom: 4px;"><strong>ML Engine:</strong> scikit-learn RF</div>
+                <div>AETHER Build v2.4 (Flask)</div>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Top Header Banner -->
+            <header class="top-header">
+                <div>
+                    <h1 class="header-title">{{ title }}</h1>
+                    <div class="header-subtitle">{{ subtitle }}</div>
+                </div>
+                <div class="status-chip">
+                    <span style="height: 10px; width: 10px; background-color: #10B981; border-radius: 50%; display: inline-block;"></span>
+                    AI ADVISORY ONLINE
+                </div>
+            </header>
+
+            <!-- ============================================== -->
+            <!-- SECTION 1: DASHBOARD -->
+            <!-- ============================================== -->
+            <section id="section-dashboard" class="view-section active">
+                <!-- 4 Top KPI Cards -->
+                <div class="grid-4">
+                    <div class="kpi-card">
+                        <div class="kpi-label">Total Shipments</div>
+                        <div class="kpi-val" id="kpiTotal">--</div>
+                        <div class="kpi-sub" style="color: var(--text-muted);">All registered manifests</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-label">Active Shipments</div>
+                        <div class="kpi-val" id="kpiActive" style="color: var(--blue-primary);">--</div>
+                        <div class="kpi-sub" style="color: var(--blue-primary);">Currently in transit</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-label">Delivered Shipments</div>
+                        <div class="kpi-val" id="kpiDelivered" style="color: var(--emerald-primary);">--</div>
+                        <div class="kpi-sub" style="color: var(--emerald-primary);">Completed journeys</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-label">Active Alerts</div>
+                        <div class="kpi-val" id="kpiAlerts" style="color: var(--red-primary);">--</div>
+                        <div class="kpi-sub" id="kpiAlertsSub" style="color: var(--red-primary);">Excursions & alarms</div>
+                    </div>
+                </div>
+
+                <!-- 3 Middle KPI Cards -->
+                <div class="grid-3">
+                    <div class="kpi-card">
+                        <div class="kpi-label">Average Temperature</div>
+                        <div class="kpi-val" id="kpiAvgTemp" style="color: var(--blue-primary);">-- °C</div>
+                        <div class="kpi-sub" style="color: var(--text-muted);">Across active sensors</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-label">Average Humidity</div>
+                        <div class="kpi-val" id="kpiAvgHum" style="color: var(--blue-primary);">-- %</div>
+                        <div class="kpi-sub" style="color: var(--text-muted);">Chamber average</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-label">Overall Shipment Health</div>
+                        <div class="kpi-val" id="kpiHealth" style="color: var(--emerald-primary);">-- %</div>
+                        <div class="kpi-sub" id="kpiHealthSub" style="color: var(--emerald-primary);">Composite index</div>
+                    </div>
+                </div>
+
+                <!-- Charts Row -->
+                <h3 style="margin-bottom: 16px; font-size: 1.2rem;">Thermal & Risk Visualizations</h3>
+                <div class="grid-3">
+                    <div class="card">
+                        <div class="card-title" style="font-size: 1rem;">Temperature Trend (°C)</div>
+                        <div style="height: 220px;"><canvas id="chartTemp"></canvas></div>
+                    </div>
+                    <div class="card">
+                        <div class="card-title" style="font-size: 1rem;">Humidity Trend (%)</div>
+                        <div style="height: 220px;"><canvas id="chartHum"></canvas></div>
+                    </div>
+                    <div class="card">
+                        <div class="card-title" style="font-size: 1rem;">AI Transport Risk Distribution</div>
+                        <div style="height: 220px;"><canvas id="chartRisk"></canvas></div>
+                    </div>
+                </div>
+
+                <!-- Operational Tables -->
+                <h3 style="margin-bottom: 16px; font-size: 1.2rem;">Operational Intelligence & Activity</h3>
+                <div class="card">
+                    <div class="tabs-header">
+                        <button class="tab-btn active" onclick="switchDashTab('tabShipments', this)">📦 Recent Shipments</button>
+                        <button class="tab-btn" onclick="switchDashTab('tabRecs', this)">⚡ AI Recommendations</button>
+                        <button class="tab-btn" onclick="switchDashTab('tabAlerts', this)">🚨 Active Alerts</button>
+                    </div>
+                    <div id="tabShipments" class="dash-tab-content">
+                        <div class="table-container">
+                            <table class="data-table">
+                                <thead>
+                                    <tr><th>Shipment ID</th><th>Product</th><th>Category</th><th>Origin ➔ Destination</th><th>Storage Profile</th><th>Status</th><th>ETA</th></tr>
+                                </thead>
+                                <tbody id="tableShipmentsBody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div id="tabRecs" class="dash-tab-content" style="display: none;">
+                        <div class="table-container">
+                            <table class="data-table">
+                                <thead>
+                                    <tr><th>Shipment ID</th><th>Product</th><th>Priority</th><th>Action Recommendation</th><th>Reasoning</th></tr>
+                                </thead>
+                                <tbody id="tableRecsBody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div id="tabAlerts" class="dash-tab-content" style="display: none;">
+                        <div class="table-container">
+                            <table class="data-table">
+                                <thead>
+                                    <tr><th>Shipment ID</th><th>Product</th><th>Severity</th><th>Excursion / Alert Details</th></tr>
+                                </thead>
+                                <tbody id="tableAlertsBody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============================================== -->
+            <!-- SECTION 2: REGISTER SHIPMENT -->
+            <!-- ============================================== -->
+            <section id="section-register" class="view-section">
+                <div class="card" style="max-width: 900px; margin: 0 auto;">
+                    <h2 class="card-title" style="font-size: 1.5rem;">Register New Cold Chain Consignment</h2>
+                    <p class="card-subtitle">Enter manifest specifications, storage profile tolerances, and transport assignment to activate real-time telemetry.</p>
+
+                    <form id="formRegister" onsubmit="handleRegister(event)">
+                        <h4 style="color: var(--blue-primary); margin-bottom: 16px;">1. Consignment Specifications</h4>
+                        <div class="grid-2">
+                            <div class="form-group">
+                                <label class="form-label">Shipment ID *</label>
+                                <input type="text" class="form-control" id="regId" required placeholder="e.g. SHP-6042">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Product Category *</label>
+                                <select class="form-control" id="regCategory">
+                                    <option>Pharmaceuticals</option>
+                                    <option>Seafood</option>
+                                    <option>Dairy</option>
+                                    <option>Meat & Poultry</option>
+                                    <option>Fresh Produce</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Product Name *</label>
+                                <input type="text" class="form-control" id="regProduct" required placeholder="e.g. Pfizer mRNA Vials, Salmon Fillets">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Storage Profile *</label>
+                                <select class="form-control" id="regStorage"></select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Vehicle Number *</label>
+                                <input type="text" class="form-control" id="regVehicle" required placeholder="e.g. CRY-8821-EX">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Driver Name *</label>
+                                <input type="text" class="form-control" id="regDriver" required placeholder="e.g. Marcus Vance">
+                            </div>
+                        </div>
+
+                        <hr style="border: none; border-top: 1px solid var(--border-color); margin: 20px 0;">
+                        <h4 style="color: var(--blue-primary); margin-bottom: 16px;">2. Route & GPS Coordinates</h4>
+                        <div class="grid-2">
+                            <div class="form-group">
+                                <label class="form-label">Origin Facility / City *</label>
+                                <input type="text" class="form-control" id="regOrigin" required placeholder="e.g. Basel Pharma Hub, CH">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Destination Facility / City *</label>
+                                <input type="text" class="form-control" id="regDest" required placeholder="e.g. Frankfurt Depot, DE">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Origin Coordinates (Lat, Lon)</label>
+                                <div style="display: flex; gap: 10px;">
+                                    <input type="number" step="0.0001" class="form-control" id="regOrigLat" value="47.5596">
+                                    <input type="number" step="0.0001" class="form-control" id="regOrigLon" value="7.5886">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Destination Coordinates (Lat, Lon)</label>
+                                <div style="display: flex; gap: 10px;">
+                                    <input type="number" step="0.0001" class="form-control" id="regDestLat" value="50.1109">
+                                    <input type="number" step="0.0001" class="form-control" id="regDestLon" value="8.6821">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 24px;">
+                            <button type="submit" class="btn btn-primary" style="width: 100%;">🚀 Register Consignment & Activate Telemetry Array</button>
+                        </div>
+                    </form>
+
+                    <div id="regSuccessBox" style="display: none; background-color: var(--emerald-light); border: 1px solid #A7F3D0; padding: 18px; border-radius: 12px; margin-top: 20px; color: var(--emerald-dark);">
+                        <strong>✅ Consignment Registered Successfully!</strong>
+                        <p style="margin-top: 4px; font-size: 0.9rem;" id="regSuccessMsg"></p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============================================== -->
+            <!-- SECTION 3: LIVE MONITORING -->
+            <!-- ============================================== -->
+            <section id="section-live" class="view-section">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <div>
+                        <h2 style="font-size: 1.5rem; margin-bottom: 4px;">Live Telemetry & Condition Monitoring</h2>
+                        <p style="color: var(--text-muted); font-size: 0.92rem;">Real-time thermal tracking across 9 multi-zone internal trailer sensors, humidity, and door access.</p>
+                    </div>
+                    <div>
+                        <select class="custom-select" id="selectLiveShipment" onchange="loadLiveMonitoring()"></select>
+                    </div>
+                </div>
+
+                <!-- Status Banner -->
+                <div class="card" style="background: #F8FAFC; border: 1px solid #CBD5E1; padding: 18px 24px;">
+                    <div class="grid-4" style="margin-bottom: 0;">
+                        <div>
+                            <div style="font-size: 0.78rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Vehicle Status</div>
+                            <div style="font-size: 1.05rem; font-weight: 700; color: var(--blue-primary); margin-top: 2px;" id="liveVehStat">--</div>
+                        </div>
+                        <div>
+                            <div style="font-size: 0.78rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Consignment Status</div>
+                            <div style="font-size: 1.15rem; font-weight: 800;" id="liveShipStat">--</div>
+                        </div>
+                        <div>
+                            <div style="font-size: 0.78rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Travel Duration</div>
+                            <div style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-top: 2px;" id="liveDuration">--</div>
+                        </div>
+                        <div>
+                            <div style="font-size: 0.78rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Storage Envelope</div>
+                            <div style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-top: 2px;" id="liveStorage">--</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 9 Temperature Sensors Grid -->
+                <h3 style="margin: 24px 0 16px 0; font-size: 1.2rem;">9-Zone Trailer Thermal Array (°C)</h3>
+                <div class="sensor-grid-3x3" id="sensorGrid3x3"></div>
+
+                <!-- Environmental Cards -->
+                <h3 style="margin: 24px 0 16px 0; font-size: 1.2rem;">Atmospheric Humidity & Security Door Access</h3>
+                <div class="grid-2">
+                    <div class="kpi-card" id="cardHum">
+                        <div class="kpi-label">Chamber Relative Humidity</div>
+                        <div class="kpi-val" id="liveHumVal">-- %</div>
+                        <div class="kpi-sub" id="liveHumSub">--</div>
+                    </div>
+                    <div class="kpi-card" id="cardDoors">
+                        <div class="kpi-label">Security Door Opening Count</div>
+                        <div class="kpi-val" id="liveDoorVal">-- Events</div>
+                        <div class="kpi-sub" id="liveDoorSub">--</div>
+                    </div>
+                </div>
+
+                <!-- Interactive IoT Simulator -->
+                <div class="card" style="margin-top: 28px; border-left: 6px solid var(--blue-primary); background: #F8FAFC;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; cursor: pointer;" onclick="toggleSim()">
+                        <h4 style="color: var(--text-primary); font-size: 1.1rem;">🎛️ Real-Time Telemetry Excursion Simulator (Interactive Demo Control)</h4>
+                        <span id="simArrow" style="font-weight: 800; font-size: 1.2rem;">+</span>
+                    </div>
+                    <div id="simBody" style="display: none; margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--border-color);">
+                        <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 20px;">Adjust sliders below to simulate live IoT thermal drift or unauthorized door openings. Clicking Update immediately recalculates AI risk models and updates the 9-sensor array.</p>
+                        
+                        <div class="grid-3">
+                            <div>
+                                <label class="form-label" style="display: flex; justify-content: space-between;">
+                                    <span>Simulate Sensor 9 (Rear Bottom) Temp</span>
+                                    <strong id="simS9Val" style="color: var(--blue-primary);">-- °C</strong>
+                                </label>
+                                <input type="range" class="slider-control" id="simS9Input" min="-80" max="40" step="0.5" oninput="document.getElementById('simS9Val').innerText = this.value + ' °C'">
+                            </div>
+                            <div>
+                                <label class="form-label" style="display: flex; justify-content: space-between;">
+                                    <span>Simulate Chamber Humidity</span>
+                                    <strong id="simHumVal" style="color: var(--emerald-primary);">-- %</strong>
+                                </label>
+                                <input type="range" class="slider-control" id="simHumInput" min="10" max="95" step="1" oninput="document.getElementById('simHumVal').innerText = this.value + ' %'">
+                            </div>
+                            <div>
+                                <label class="form-label" style="display: flex; justify-content: space-between;">
+                                    <span>Simulate Door Opening Count</span>
+                                    <strong id="simDoorVal" style="color: var(--text-primary);">-- Events</strong>
+                                </label>
+                                <input type="number" class="form-control" id="simDoorInput" min="0" max="25" value="0">
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 20px; text-align: right;">
+                            <button class="btn btn-primary" onclick="applyTelemetryUpdate()">⚡ Apply Live IoT Telemetry Update</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============================================== -->
+            <!-- SECTION 4: AI ANALYSIS -->
+            <!-- ============================================== -->
+            <section id="section-ai" class="view-section">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <div>
+                        <h2 style="font-size: 1.5rem; margin-bottom: 4px;">AI Analysis & Risk Prediction Core</h2>
+                        <p style="color: var(--text-muted); font-size: 0.92rem;">Machine learning transport risk classification, rule-based biological spoilage inference, composite health scoring, and prescriptive recommendations.</p>
+                    </div>
+                    <div>
+                        <select class="custom-select" id="selectAiShipment" onchange="loadAiAnalysis()"></select>
+                    </div>
+                </div>
+
+                <!-- 3 Top AI Cards -->
+                <div class="grid-3">
+                    <div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <div style="font-size: 0.78rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">1. Transport Risk (ML Model)</div>
+                            <div style="font-size: 0.8rem; color: var(--blue-primary); font-weight: 600;">Trained Random Forest Classifier</div>
+                            <div style="margin: 18px 0;">
+                                <span style="font-family: 'Outfit', sans-serif; font-size: 2.4rem; font-weight: 800;" id="aiTransLevel">--</span>
+                                <div style="font-size: 0.88rem; color: var(--text-muted); margin-top: 4px;">Prediction Confidence: <strong id="aiTransConf" style="color: var(--text-primary);">--%</strong></div>
+                            </div>
+                        </div>
+                        <div style="font-size: 0.75rem; background: #F8FAFC; padding: 10px; border-radius: 8px; border: 1px solid var(--border-color);" id="aiTransProbs">
+                            --
+                        </div>
+                    </div>
+
+                    <div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <div style="font-size: 0.78rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">2. Spoilage Risk (Rule Engine)</div>
+                            <div style="font-size: 0.8rem; color: var(--emerald-primary); font-weight: 600;">Multi-Parameter Thermal & Access Inference</div>
+                            <div style="margin: 18px 0;">
+                                <span style="font-family: 'Outfit', sans-serif; font-size: 2.4rem; font-weight: 800;" id="aiSpoilLevel">--</span>
+                                <div style="font-size: 0.88rem; color: var(--text-muted); margin-top: 4px;">Rule Severity Score: <strong id="aiSpoilScore" style="color: var(--text-primary);">-- / 10</strong></div>
+                            </div>
+                        </div>
+                        <div style="font-size: 0.75rem; background: #F8FAFC; padding: 10px; border-radius: 8px; border: 1px solid var(--border-color);" id="aiSpoilProfile">
+                            --
+                        </div>
+                    </div>
+
+                    <div class="card" style="text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                        <div style="font-size: 0.78rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-bottom: 4px;">3. Shipment Health Score</div>
+                        <div style="position: relative; width: 180px; height: 180px; display: flex; justify-content: center; align-items: center;">
+                            <canvas id="chartHealthGauge"></canvas>
+                            <div style="position: absolute; font-family: 'Outfit', sans-serif; font-size: 2rem; font-weight: 800;" id="aiHealthText">--%</div>
+                        </div>
+                        <div style="font-size: 0.82rem; color: var(--text-muted); margin-top: 6px;">System Composite Index</div>
+                    </div>
+                </div>
+
+                <!-- Detailed Reasoning Box -->
+                <h3 style="margin: 24px 0 14px 0; font-size: 1.2rem;">Explainability Engine: Why Was This Risk Calculated?</h3>
+                <div class="card" style="border-left: 6px solid var(--blue-primary); background: #FFFFFF;">
+                    <div style="font-size: 0.95rem; font-weight: 700; color: var(--text-primary); margin-bottom: 12px;">🔍 Biological Spoilage & Thermal Deviation Reasoning:</div>
+                    <div id="aiReasonsList"></div>
+                </div>
+
+                <!-- Recommendations -->
+                <h3 style="margin: 24px 0 14px 0; font-size: 1.2rem;">Actionable Strategic Recommendations</h3>
+                <div id="aiRecsList"></div>
+            </section>
+
+            <!-- ============================================== -->
+            <!-- SECTION 5: GPS TRACKING -->
+            <!-- ============================================== -->
+            <section id="section-gps" class="view-section">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <div>
+                        <h2 style="font-size: 1.5rem; margin-bottom: 4px;">Real-Time GPS Tracking & Route Telemetry</h2>
+                        <p style="color: var(--text-muted); font-size: 0.92rem;">Interactive satellite vector map plotting consignment origin, destination terminal, current truck coordinates, and milestones.</p>
+                    </div>
+                    <div>
+                        <select class="custom-select" id="selectGpsShipment" onchange="loadGpsTracking()"></select>
+                    </div>
+                </div>
+
+                <!-- Leaflet Map -->
+                <div class="card" style="padding: 10px;">
+                    <div id="leafletMap"></div>
+                </div>
+
+                <!-- Route Milestones -->
+                <h3 style="margin: 24px 0 16px 0; font-size: 1.2rem;">Route Milestones & Navigation Telemetry</h3>
+                <div class="grid-3">
+                    <div class="kpi-card">
+                        <div class="kpi-label">Origin Terminal</div>
+                        <div class="kpi-val" style="font-size: 1.3rem;" id="gpsOrigName">--</div>
+                        <div class="kpi-sub" style="color: var(--blue-primary);" id="gpsOrigCoords">--</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-label">Destination Terminal</div>
+                        <div class="kpi-val" style="font-size: 1.3rem;" id="gpsDestName">--</div>
+                        <div class="kpi-sub" style="color: var(--emerald-primary);" id="gpsDestCoords">--</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-label">Current Truck Position</div>
+                        <div class="kpi-val" style="font-size: 1.3rem;" id="gpsCurrCoords">--</div>
+                        <div class="kpi-sub" style="color: var(--text-primary);" id="gpsVehStat">--</div>
+                    </div>
+                </div>
+
+                <div class="grid-3">
+                    <div class="kpi-card">
+                        <div class="kpi-label">Estimated Delivery (ETA)</div>
+                        <div class="kpi-val" style="font-size: 1.3rem;" id="gpsEta">--</div>
+                        <div class="kpi-sub" style="color: var(--blue-primary);" id="gpsTotDist">--</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-label">Remaining Distance</div>
+                        <div class="kpi-val" style="font-size: 1.6rem; color: var(--text-primary);" id="gpsRemDist">-- km</div>
+                        <div class="kpi-sub" style="color: var(--text-muted);">Direct Haversine trajectory</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-label">Route Progress</div>
+                        <div class="kpi-val" style="font-size: 1.6rem; color: var(--emerald-primary);" id="gpsProgressText">-- %</div>
+                        <div style="background: #E2E8F0; border-radius: 10px; height: 8px; width: 100%; margin-top: 8px; overflow: hidden;">
+                            <div id="gpsProgressBar" style="background: var(--emerald-primary); height: 100%; width: 0%; transition: width 0.5s ease;"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============================================== -->
+            <!-- SECTION 6: REPORTS & AUDIT -->
+            <!-- ============================================== -->
+            <section id="section-reports" class="view-section">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <div>
+                        <h2 style="font-size: 1.5rem; margin-bottom: 4px;">Regulatory Audit & Compliance Reports</h2>
+                        <p style="color: var(--text-muted); font-size: 0.92rem;">Generate, inspect, and export certified PDF audit documentation for FDA/EMA compliance and customs verification.</p>
+                    </div>
+                    <div>
+                        <select class="custom-select" id="selectRepShipment" onchange="loadReports()"></select>
+                    </div>
+                </div>
+
+                <!-- Download Banner -->
+                <div class="card" style="background: #EFF6FF; border: 1px solid #BFDBFE; display: flex; justify-content: space-between; align-items: center; padding: 24px 30px;">
+                    <div>
+                        <h3 style="color: var(--blue-dark); font-size: 1.25rem; margin-bottom: 4px;">📄 Official Executive ReportLab PDF Audit Ready</h3>
+                        <p style="color: var(--blue-primary); font-size: 0.9rem;">Includes 256-Bit SHA-3 verification hash, 9-zone thermal telemetry array, ML risk metrics, and prescriptive action plan.</p>
+                    </div>
+                    <div>
+                        <button class="btn btn-primary" style="padding: 14px 28px; font-size: 1rem;" onclick="downloadPdfReport()">⬇️ Download Executive PDF</button>
+                    </div>
+                </div>
+
+                <!-- On-Screen Preview -->
+                <h3 style="margin: 24px 0 16px 0; font-size: 1.2rem;">Interactive Report Preview</h3>
+                
+                <div class="card">
+                    <h4 style="color: var(--blue-primary); margin-bottom: 12px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px;">1. Consignment Logistics Manifest</h4>
+                    <div class="grid-3" style="margin-bottom: 0;">
+                        <div id="repCol1">--</div>
+                        <div id="repCol2">--</div>
+                        <div id="repCol3">--</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h4 style="color: var(--blue-primary); margin-bottom: 14px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px;">2. 9-Zone Thermal & Environmental Summary</h4>
+                    <div class="grid-4" style="margin-bottom: 0;">
+                        <div class="kpi-card"><div class="kpi-label">Avg Sensor Temp</div><div class="kpi-val" style="font-size:1.4rem;" id="repAvgTemp">--</div></div>
+                        <div class="kpi-card"><div class="kpi-label">Thermal Envelope</div><div class="kpi-val" style="font-size:1.2rem;" id="repRange">--</div></div>
+                        <div class="kpi-card"><div class="kpi-label">Relative Humidity</div><div class="kpi-val" style="font-size:1.4rem;" id="repHum">--</div></div>
+                        <div class="kpi-card"><div class="kpi-label">Security Access</div><div class="kpi-val" style="font-size:1.4rem;" id="repDoors">--</div></div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h4 style="color: var(--blue-primary); margin-bottom: 14px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px;">3 & 4. AI Risk Audit & Reasoning</h4>
+                    <div class="grid-3">
+                        <div class="kpi-card"><div class="kpi-label">Transport Risk (ML)</div><div class="kpi-val" style="font-size:1.5rem;" id="repTransRisk">--</div></div>
+                        <div class="kpi-card"><div class="kpi-label">Spoilage Risk (Rules)</div><div class="kpi-val" style="font-size:1.5rem;" id="repSpoilRisk">--</div></div>
+                        <div class="kpi-card"><div class="kpi-label">Shipment Health Index</div><div class="kpi-val" style="font-size:1.5rem;" id="repHealth">--</div></div>
+                    </div>
+                    <div style="margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border-color);">
+                        <strong style="font-size: 0.92rem;">Detailed Spoilage Reasoning:</strong>
+                        <div id="repReasonsList" style="margin-top: 8px;"></div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h4 style="color: var(--blue-primary); margin-bottom: 12px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px;">5. Prescriptive Operational Action Plan</h4>
+                    <div id="repRecsList"></div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Custom JS -->
+    <script src="/static/js/main.js"></script>
+</body>
+</html>

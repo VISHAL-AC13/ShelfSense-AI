@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: coldsense-ai-tn
+    runtime: python
+    region: singapore # Optimal latency for Tamil Nadu / India
+    plan: free
+    buildCommand: "cd cold_chain_web && npm install && npm run build && cd ../backend && pip install -r requirements.txt && pip install gunicorn"
+    startCommand: "cd backend && gunicorn --bind 0.0.0.0:$PORT --workers 2 app:app"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.8

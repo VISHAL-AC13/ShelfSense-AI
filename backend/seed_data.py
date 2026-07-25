@@ -1,0 +1,150 @@
+import models
+
+INITIAL_TN_SHIPMENTS = [
+  {
+    "shipment_id": "SHP-TN-8012",
+    "product_category": "Fresh Fruits",
+    "product": "Nilgiri Organic Strawberries & Plums",
+    "storage_type": "Fresh Fruits (Berries & Grapes)",
+    "vehicle_number": "TN-43-F-8012",
+    "driver_name": "Vishal S.",
+    "origin_name": "Ooty Agri-Hub, Nilgiris, TN",
+    "dest_name": "Koyambedu Fruit Market, Chennai, TN",
+    "origin_lat": 11.4102,
+    "origin_lon": 76.6950,
+    "dest_lat": 13.0694,
+    "dest_lon": 80.1948,
+    "current_lat": 11.6643,
+    "current_lon": 78.1460,
+    "status": "Active",
+    "vehicle_status": "En Route -- Salem-Chennai NH44 Cruising",
+    "travel_duration": "8 hours 15 mins",
+    "delay_hours": 0.0,
+    "progress_pct": 65,
+    "sensors": [0.8, 1.1, 1.0, 0.9, 1.2, 1.0, 1.1, 0.9, 1.0],
+    "humidity": 82.0,
+    "door_openings": 1,
+    "alerts": [],
+    "expected_delivery": "2026-07-26 14:00"
+  },
+  {
+    "shipment_id": "SHP-TN-8025",
+    "product_category": "Tropical Fruits",
+    "product": "Salem Alphonso Mangoes & Poovan Bananas",
+    "storage_type": "Tropical Fruits (Bananas & Mangoes)",
+    "vehicle_number": "TN-60-A-9025",
+    "driver_name": "Vishal K.",
+    "origin_name": "Theni Banana & Mango Hub, TN",
+    "dest_name": "Madurai Central Market, TN",
+    "origin_lat": 10.0104,
+    "origin_lon": 77.4768,
+    "dest_lat": 9.9252,
+    "dest_lon": 78.1198,
+    "current_lat": 9.9700,
+    "current_lon": 77.8000,
+    "status": "Active",
+    "vehicle_status": "En Route -- Nominal Velocity on NH85",
+    "travel_duration": "1 hour 45 mins",
+    "delay_hours": 0.0,
+    "progress_pct": 78,
+    "sensors": [13.2, 13.5, 13.4, 13.6, 13.5, 13.3, 13.7, 13.5, 13.6],
+    "humidity": 75.0,
+    "door_openings": 2,
+    "alerts": [],
+    "expected_delivery": "2026-07-26 11:30"
+  },
+  {
+    "shipment_id": "SHP-TN-8041",
+    "product_category": "Seafood",
+    "product": "Thoothukudi Seer Fish (Vanjaram) & Prawns",
+    "storage_type": "Fresh Seafood & Sushi Grade Fish",
+    "vehicle_number": "TN-69-S-7741",
+    "driver_name": "Vishal R.",
+    "origin_name": "Thoothukudi Fishing Harbor, TN",
+    "dest_name": "Coimbatore Ukkadam Fish Market, TN",
+    "origin_lat": 8.7956,
+    "origin_lon": 78.1348,
+    "dest_lat": 10.9925,
+    "dest_lon": 76.9614,
+    "current_lat": 9.5872,
+    "current_lon": 77.9514,
+    "status": "Warning",
+    "vehicle_status": "Warning -- Rear Chamber Temp Drift",
+    "travel_duration": "5 hours 30 mins",
+    "delay_hours": 1.0,
+    "progress_pct": 55,
+    "sensors": [-0.9, -1.0, -0.8, -0.5, -0.2, 0.1, 0.4, 0.7, 0.9],
+    "humidity": 88.0,
+    "door_openings": 2,
+    "alerts": [
+      "THERMAL DRIFT WARNING: Rear chamber sensors operating near +0.9°C ceiling on Madurai highway.",
+      "HIGH HUMIDITY: 88.0% moisture level increases surface condensation risk on Vanjaram fish crates."
+    ],
+    "expected_delivery": "2026-07-26 18:45"
+  },
+  {
+    "shipment_id": "SHP-TN-8059",
+    "product_category": "Fresh Vegetables",
+    "product": "Oddanchatram Crisp Keerai (Spinach) & Herbs",
+    "storage_type": "Leafy Vegetables & Salads",
+    "vehicle_number": "TN-57-V-3359",
+    "driver_name": "Vishal M.",
+    "origin_name": "Oddanchatram Vegetable Hub, TN",
+    "dest_name": "Trichy Gandhi Market, TN",
+    "origin_lat": 10.5015,
+    "origin_lon": 77.7479,
+    "dest_lat": 10.8158,
+    "dest_lon": 78.6965,
+    "current_lat": 10.7000,
+    "current_lon": 78.2000,
+    "status": "Critical",
+    "vehicle_status": "CRITICAL ALARM -- Excursion & Door Access near Karur",
+    "travel_duration": "2 hours 40 mins",
+    "delay_hours": 1.5,
+    "progress_pct": 42,
+    "sensors": [2.8, 3.1, 3.5, 4.2, 4.8, 5.2, 5.5, 5.8, 6.1],
+    "humidity": 58.0,
+    "door_openings": 6,
+    "alerts": [
+      "CRITICAL EXCURSION: 4 thermal sensors exceeding leafy vegetable +4.5°C safety ceiling.",
+      "SECURITY VIOLATION: 6 door access events logged (Protocol ceiling: 4 events). Immediate Keerai wilting risk."
+    ],
+    "expected_delivery": "2026-07-26 15:15"
+  },
+  {
+    "shipment_id": "SHP-TN-8094",
+    "product_category": "Dairy",
+    "product": "Aavin Premium Butter, Paneer & Fresh Milk",
+    "storage_type": "Prime Dairy & Cheese",
+    "vehicle_number": "TN-33-D-5194",
+    "driver_name": "Vishal G.",
+    "origin_name": "Aavin Dairy Cooperative Hub, Erode, TN",
+    "dest_name": "Anna Nagar Aavin Plaza, Chennai, TN",
+    "origin_lat": 11.3410,
+    "origin_lon": 77.7172,
+    "dest_lat": 13.0850,
+    "dest_lon": 80.2101,
+    "current_lat": 13.0850,
+    "current_lon": 80.2101,
+    "status": "Delivered",
+    "vehicle_status": "Completed -- Delivery Verified at Anna Nagar",
+    "travel_duration": "6 hours 45 mins",
+    "delay_hours": 0.0,
+    "progress_pct": 100,
+    "sensors": [3.8, 4.0, 3.9, 4.1, 4.0, 3.9, 4.0, 4.1, 4.0],
+    "humidity": 70.0,
+    "door_openings": 3,
+    "alerts": [],
+    "expected_delivery": "2026-07-26 09:00"
+  }
+]
+
+def seed():
+    models.init_db()
+    models.clear_all_shipments()
+    for s in INITIAL_TN_SHIPMENTS:
+        models.insert_shipment(s)
+    print("[OK] Seeded 5 Tamil Nadu Agri-Food Consignments into SQLite database!")
+
+if __name__ == "__main__":
+    seed()
