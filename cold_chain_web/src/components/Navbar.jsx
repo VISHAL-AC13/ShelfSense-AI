@@ -2,7 +2,7 @@
 import React from "react";
 import { Sparkles, Shield, Clock, Zap, RefreshCw, Menu } from "lucide-react";
 
-export default function Navbar({ activeTab, activeInterventions, onResetDemo, onToggleMobile }) {
+export default function Navbar({ activeTab, activeInterventions, onResetDemo, onToggleMobile, currentUser, onLogout }) {
   const getTitle = () => {
     switch (activeTab) {
       case "dashboard": return "Fleet Dashboard";
@@ -68,6 +68,19 @@ export default function Navbar({ activeTab, activeInterventions, onResetDemo, on
           <Shield size={14} color="#059669" />
           <span>Automated Recovery: Enabled</span>
         </div>
+        {currentUser && (
+          <div style={{ display: "flex", alignItems: "center", gap: "8px", background: "#EFF6FF", padding: "4px 10px", borderRadius: "20px", border: "1px solid #BFDBFE" }}>
+            <span style={{ fontSize: "0.8rem", color: "#1E3A8A", fontWeight: 700 }}>👤 {currentUser.name}</span>
+            {onLogout && (
+              <button 
+                onClick={onLogout}
+                style={{ background: "#DBEAFE", border: "none", color: "#1D4ED8", cursor: "pointer", padding: "2px 8px", borderRadius: "10px", fontSize: "0.75rem", fontWeight: 700 }}
+              >
+                Sign Out
+              </button>
+            )}
+          </div>
+        )}
       </div>
     </header>
   );

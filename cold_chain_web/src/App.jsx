@@ -8,6 +8,7 @@ import LiveMonitoring from "./modules/LiveMonitoring";
 import AiAnalysis from "./modules/AiAnalysis";
 import GpsTracking from "./modules/GpsTracking";
 import ReportsAudit from "./modules/ReportsAudit";
+import LoginPage from "./components/LoginPage";
 import { INITIAL_SHIPMENTS, STORAGE_PROFILES } from "./data/mockData";
 import { 
   fetchShipments, 
@@ -19,6 +20,15 @@ import {
 import "./App.css";
 
 export default function App() {
+  const [currentUser, setCurrentUser] = useState(() => {
+    try {
+      const savedUser = localStorage.getItem("aether_tn_user");
+      return savedUser ? JSON.parse(savedUser) : null;
+    } catch (err) {
+      return null;
+    }
+  });
+
   const [activeTab, setActiveTab] = useState("dashboard");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [shipments, setShipments] = useState(() => {
@@ -68,6 +78,21 @@ export default function App() {
     setTimeout(() => {
       setToastMsg(null);
     }, 4500);
+  };
+
+  const handleLogin = (user) => {
+    setCurrentUser(user);
+    try {
+      localStorage.setItem("aether_tn_user", JSON.stringify(user));
+    } catch (err) {}
+    showToast(`Welcome, ${user.name} (${user.role})!`);
+  };
+
+  const handleLogout = () => {
+    setCurrentUser(null);
+    try {
+      localStorage.removeItem("aether_tn_user");
+    } catch (err) {}
   };
 
   // Reset to default Tamil Nadu Demo Manifests
@@ -245,6 +270,10 @@ export default function App() {
     }
   });
 
+  if (!currentUser) {
+    return <LoginPage onLogin={handleLogin} />;
+  }
+
   return (
     <div className="app-layout">
       {/* Clean, professional toast notification without flashy neon colors */}
@@ -287,6 +316,8 @@ export default function App() {
         activeInterventions={activeInterventions}
         mobileMenuOpen={mobileMenuOpen}
         onCloseMobile={() => setMobileMenuOpen(false)}
+        currentUser={currentUser}
+        onLogout={handleLogout}
       />
 
       <main className="main-container">
@@ -295,6 +326,8 @@ export default function App() {
           activeInterventions={activeInterventions} 
           onResetDemo={handleResetDemo}
           onToggleMobile={() => setMobileMenuOpen(!mobileMenuOpen)}
+          currentUser={currentUser}
+          onLogout={handleLogout}
         />
 
         <div className="content-area">
